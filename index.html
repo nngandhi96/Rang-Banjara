@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rang Banjara | Artisanal Silver & Brass Jewellery</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#fcf8f5',
+                            100: '#f5ebe0',
+                            200: '#edd5c2',
+                            300: '#dfb799',
+                            400: '#ce946d',
+                            500: '#b8754b',
+                            600: '#a35f3a',
+                            700: '#864c2f',
+                            800: '#6e3f29',
+                            900: '#5a3423',
+                            950: '#321a11',
+                        },
+                        terracotta: {
+                            DEFAULT: '#9b3b26',
+                            dark: '#732717',
+                            light: '#b7543f'
+                        },
+                        goldleaf: {
+                            DEFAULT: '#c5a059',
+                            dark: '#a37f3f',
+                            light: '#dfbe7d'
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'Georgia', 'serif'],
+                        sans: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #fcf8f5;
+            color: #321a11;
+        }
+        h1, h2, h3, h4, .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f5ebe0;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #ce946d;
+            border-radius: 3px;
+        }
+        .hero-gradient {
+            background: linear-gradient(to right, rgba(50, 26, 17, 0.85), rgba(50, 26, 17, 0.4)), url('https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?q=80&w=1600&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-brand-200 selection:text-brand-900">
+
+    <!-- Top Announcement Bar -->
+    <div class="bg-brand-950 text-brand-200 text-xs tracking-widest py-2 px-4 text-center uppercase font-medium flex items-center justify-center gap-4">
+        <span><i class="fa-solid fa-sparkles text-goldleaf mr-1"></i> Free Insured Shipping Across India on Orders Above ₹2,999</span>
+        <span class="hidden md:inline text-goldleaf">|</span>
+        <span class="hidden md:inline">Use Code: <strong>RANG10</strong> for 10% Off</span>
+    </div>
+
+    <!-- Navigation Header -->
+    <header class="sticky top-0 z-40 bg-brand-50/95 backdrop-blur-md border-b border-brand-200 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <button onclick="toggleMobileMenu()" class="md:hidden text-brand-900 focus:outline-none p-2" aria-label="Toggle Menu">
+                <i class="fa-solid fa-bars text-xl"></i>
+            </button>
+
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium tracking-wide uppercase text-brand-900">
+                <a href="#collections" class="hover:text-goldleaf transition-colors">Collections</a>
+                <a href="#shop" class="hover:text-goldleaf transition-colors">Shop All</a>
+                <a href="#story" class="hover:text-goldleaf transition-colors">Our Craft</a>
+                <a href="#reviews" class="hover:text-goldleaf transition-colors">Reviews</a>
+            </nav>
+
+            <div class="text-center cursor-pointer" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+                <span class="font-serif text-2xl md:text-3xl font-bold tracking-wider text-brand-950">RANG BANJARA</span>
+                <span class="block text-[9px] tracking-[0.3em] uppercase text-goldleaf font-semibold -mt-1">Artisanal Silver & Brass</span>
+            </div>
+
+            <div class="flex items-center space-x-5 text-brand-900">
+                <button onclick="openSearchModal()" class="hover:text-goldleaf transition-colors p-2" aria-label="Search">
+                    <i class="fa-solid fa-magnifying-glass text-lg"></i>
+                </button>
+                <button onclick="toggleWishlistDrawer()" class="relative hover:text-goldleaf transition-colors p-2 hidden sm:block" aria-label="Wishlist">
+                    <i class="fa-regular fa-heart text-lg"></i>
+                    <span id="wishlist-badge" class="absolute top-1 right-1 bg-terracotta text-white text-[10px] rounded-full h-4 w-4 flex items-center justify-center font-bold">0</span>
+                </button>
+                <button onclick="toggleCartDrawer()" class="relative hover:text-goldleaf transition-colors p-2" aria-label="Shopping Cart">
+                    <i class="fa-solid fa-bag-shopping text-lg"></i>
+                    <span id="cart-badge" class="absolute top-1 right-1 bg-brand-800 text-white text-[10px] rounded-full h-4 w-4 flex items-center justify-center font-bold">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobile-menu" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden transition-opacity opacity-0">
+        <div class="absolute top-0 left-0 bottom-0 w-4/5 max-w-sm bg-brand-50 p-6 flex flex-col justify-between shadow-2xl transform -translate-x-full transition-transform duration-300" id="mobile-menu-panel">
+            <div>
+                <div class="flex items-center justify-between pb-6 border-b border-brand-200">
+                    <span class="font-serif text-xl font-bold text-brand-950">Menu</span>
+                    <button onclick="toggleMobileMenu()" class="text-brand-900 p-2"><i class="fa-solid fa-xmark text-xl"></i></button>
+                </div>
+                <nav class="flex flex-col space-y-4 pt-6 text-base font-medium text-brand-900 uppercase tracking-wider">
+                    <a href="#collections" onclick="toggleMobileMenu()" class="hover:text-goldleaf">Collections</a>
+                    <a href="#shop" onclick="toggleMobileMenu()" class="hover:text-goldleaf">Shop All</a>
+                    <a href="#story" onclick="toggleMobileMenu()" class="hover:text-goldleaf">Our Craft</a>
+                    <a href="#reviews" onclick="toggleMobileMenu()" class="hover:text-goldleaf">Testimonials</a>
+                </nav>
+            </div>
+            <div class="text-xs text-brand-700 pb-4 border-t border-brand-200 pt-4">
+                <p class="font-semibold text-brand-900 mb-1">Need assistance?</p>
+                <a href="https://wa.me/917303474030" target="_blank" rel="noopener noreferrer" class="hover:text-green-700 font-medium inline-flex items-center gap-1.5 text-brand-950">
+                    <i class="fa-brands fa-whatsapp text-green-600 text-sm"></i> +91 7303474030
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="relative hero-gradient text-white py-24 md:py-36 px-4 flex items-center justify-center min-h-[75vh]">
+        <div class="max-w-4xl mx-auto text-center space-y-6 z-10">
+            <span class="inline-block py-1.5 px-4 rounded-full bg-goldleaf/20 border border-goldleaf/50 text-goldleaf text-xs uppercase tracking-[0.25em] font-semibold">
+                Handcrafted Tribal Heritage
+            </span>
+            <h1 class="font-serif text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight leading-tight">
+                Timeless Bohemian &amp; Banjara Silver Elegance
+            </h1>
+            <p class="max-w-2xl mx-auto text-brand-100/95 text-base md:text-lg font-light leading-relaxed">
+                Exquisite oxidized silver, brass statements, and Banjara mirror-work jewellery crafted by master tribal artisans across rural India.
+            </p>
+            <div class="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="#shop" class="w-full sm:w-auto bg-goldleaf hover:bg-goldleaf-dark text-brand-950 font-semibold uppercase text-xs tracking-[0.2em] px-8 py-4 rounded-full shadow-lg transition-all transform hover:-translate-y-0.5">
+                    Explore Collection
+                </a>
+                <a href="#story" class="w-full sm:w-auto bg-white/10 hover:bg-white/20 border border-white/30 text-white font-medium uppercase text-xs tracking-[0.2em] px-8 py-4 rounded-full backdrop-blur-sm transition-all">
+                    Our Craft Story
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Badges Bar -->
+    <section class="bg-brand-100 border-y border-brand-200 py-6 px-4">
+        <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+            <div class="flex flex-col items-center space-y-1">
+                <i class="fa-solid fa-gem text-goldleaf text-2xl mb-1"></i>
+                <h4 class="font-serif font-bold text-sm text-brand-950">925 Sterling Silver</h4>
+                <p class="text-xs text-brand-700">Certified authentic purity</p>
+            </div>
+            <div class="flex flex-col items-center space-y-1">
+                <i class="fa-solid fa-hands-holding-child text-goldleaf text-2xl mb-1"></i>
+                <h4 class="font-serif font-bold text-sm text-brand-950">Tribal Artisans</h4>
+                <p class="text-xs text-brand-700">Fair trade &amp; sustainable</p>
+            </div>
+            <div class="flex flex-col items-center space-y-1">
+                <i class="fa-solid fa-box-open text-goldleaf text-2xl mb-1"></i>
+                <h4 class="font-serif font-bold text-sm text-brand-950">Secure Packaging</h4>
+                <p class="text-xs text-brand-700">Gift-ready luxury boxes</p>
+            </div>
+            <div class="flex flex-col items-center space-y-1">
+                <i class="fa-solid fa-rotate-left text-goldleaf text-2xl mb-1"></i>
+                <h4 class="font-serif font-bold text-sm text-brand-950">Easy Exchanges</h4>
+                <p class="text-xs text-brand-700">Hassle-free 7-day policy</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Collections Grid -->
+    <section id="collections" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <div class="text-center max-w-2xl mx-auto mb-14 space-y-3">
+            <span class="text-xs uppercase tracking-[0.25em] font-semibold text-goldleaf">Curated Categories</span>
+            <h2 class="font-serif text-3xl md:text-4xl font-bold text-brand-950">The Banjara Vault</h2>
+            <div class="w-16 h-0.5 bg-goldleaf mx-auto"></div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div onclick="filterByCategory('Necklaces')" class="group relative rounded-2xl overflow-hidden shadow-md cursor-pointer h-96 bg-brand-200">
+                <img src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?q=80&w=800&auto=format&fit=crop" alt="Banjara Silver Necklaces" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                <div class="absolute inset-0 bg-gradient-to-t from-brand-950/90 via-brand-950/20 to-transparent flex flex-col justify-end p-6 text-white">
+                    <span class="text-[10px] uppercase tracking-widest text-goldleaf font-semibold mb-1">Traditional Heritage</span>
+                    <h3 class="font-serif text-2xl font-bold mb-2">Banjara Necklaces</h3>
+                    <span class="text-xs tracking-wider uppercase font-medium underline underline-offset-4 text-brand-200">Shop Collection &rarr;</span>
+                </div>
+            </div>
+            <div onclick="filterByCategory('Rings')" class="group relative rounded-2xl overflow-hidden shadow-md cursor-pointer h-96 bg-brand-200">
+                <img src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?q=80&w=800&auto=format&fit=crop" alt="Statement Rings" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                <div class="absolute inset-0 bg-gradient-to-t from-brand-950/90 via-brand-950/20 to-transparent flex flex-col justify-end p-6 text-white">
+                    <span class="text-[10px] uppercase tracking-widest text-goldleaf font-semibold mb-1">Bold &amp; Intricate</span>
+                    <h3 class="font-serif text-2xl font-bold mb-2">Statement Rings</h3>
+                    <span class="text-xs tracking-wider uppercase font-medium underline underline-offset-4 text-brand-200">Shop Collection &rarr;</span>
+                </div>
+            </div>
+            <div onclick="filterByCategory('Earrings')" class="group relative rounded-2xl overflow-hidden shadow-md cursor-pointer h-96 bg-brand-200">
+                <img src="https://images.unsplash.com/photo-1630019852942-f89202989a59?q=80&w=800&auto=format&fit=crop" alt="Handcrafted Earrings" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                <div class="absolute inset-0 bg-gradient-to-t from-brand-950/90 via-brand-950/20 to-transparent flex flex-col justify-end p-6 text-white">
+                    <span class="text-[10px] uppercase tracking-widest text-goldleaf font-semibold mb-1">Jhumkas &amp; Chandbalis</span>
+                    <h3 class="font-serif text-2xl font-bold mb-2">Handcrafted Earrings</h3>
+                    <span class="text-xs tracking-wider uppercase font-medium underline underline-offset-4 text-brand-200">Shop Collection &rarr;</span>
+                </div>
+            </div>
+            <div onclick="filterByCategory('Payal')" class="group relative rounded-2xl overflow-hidden shadow-md cursor-pointer h-96 bg-brand-200">
+                <img src="https://images.unsplash.com/photo-1611591475759-8d3941457008?q=80&w=800&auto=format&fit=crop" alt="Oxidized Payal & Bracelets" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                <div class="absolute inset-0 bg-gradient-to-t from-brand-950/90 via-brand-950/20 to-transparent flex flex-col justify-end p-6 text-white">
+                    <span class="text-[10px] uppercase tracking-widest text-goldleaf font-semibold mb-1">Ghunsroo Charms</span>
+                    <h3 class="font-serif text-2xl font-bold mb-2">Payal &amp; Bracelets</h3>
+                    <span class="text-xs tracking-wider uppercase font-medium underline underline-offset-4 text-brand-200">Shop Collection &rarr;</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Catalog Section -->
+    <section id="shop" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t border-brand-200">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-10">
+            <div>
+                <span class="text-xs uppercase tracking-[0.25em] font-semibold text-goldleaf">Handpicked Treasures</span>
+                <h2 class="font-serif text-3xl md:text-4xl font-bold text-brand-950 mt-1">The Artisan Catalog</h2>
+            </div>
+            <div class="flex flex-wrap gap-2 mt-6 md:mt-0" id="filter-container">
+                <button onclick="filterProducts('All')" class="filter-btn active px-5 py-2 rounded-full text-xs font-semibold uppercase tracking-wider bg-brand-900 text-white transition-all shadow-sm">All Jewels</button>
+                <button onclick="filterProducts('Necklaces')" class="filter-btn px-5 py-2 rounded-full text-xs font-semibold uppercase tracking-wider bg-brand-200 text-brand-900 hover:bg-brand-300 transition-all">Necklaces</button>
+                <button onclick="filterProducts('Rings')" class="filter-btn px-5 py-2 rounded-full text-xs font-semibold uppercase tracking-wider bg-brand-200 text-brand-900 hover:bg-brand-300 transition-all">Rings</button>
+                <button onclick="filterProducts('Earrings')" class="filter-btn px-5 py-2 rounded-full text-xs font-semibold uppercase tracking-wider bg-brand-200 text-brand-900 hover:bg-brand-300 transition-all">Earrings</button>
+                <button onclick="filterProducts('Payal')" class="filter-btn px-5 py-2 rounded-full text-xs font-semibold uppercase tracking-wider bg-brand-200 text-brand-900 hover:bg-brand-300 transition-all">Payal &amp; Cuffs</button>
+            </div>
+        </div>
+
+        <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Dynamically populated via JavaScript -->
+        </div>
+    </section>
+
+    <!-- Brand Story Section -->
+    <section id="story" class="bg-brand-950 text-white py-24 px-4 my-16">
+        <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div class="space-y-6">
+                <span class="text-xs uppercase tracking-[0.3em] font-semibold text-goldleaf">Tradition Meets Modernity</span>
+                <h2 class="font-serif text-3xl sm:text-5xl font-bold leading-tight">Preserving Ancient Banjara Craftsmanship</h2>
+                <p class="text-brand-200/90 text-sm md:text-base leading-relaxed font-light">
+                    Every piece at Rang Banjara tells a story of nomadic roots, tribal motifs, and uncompromised artisanal dedication. Passed down through generations of silversmith families, our designs combine vintage rustic charm with contemporary luxury aesthetics.
+                </p>
+                <div class="grid grid-cols-2 gap-6 pt-4">
+                    <div class="border-l-2 border-goldleaf pl-4">
+                        <h4 class="font-serif text-2xl font-bold text-goldleaf">100%</h4>
+                        <p class="text-xs text-brand-200 uppercase tracking-wider mt-1">Handcrafted By Nomadic Tribes</p>
+                    </div>
+                    <div class="border-l-2 border-goldleaf pl-4">
+                        <h4 class="font-serif text-2xl font-bold text-goldleaf">5,000+</h4>
+                        <p class="text-xs text-brand-200 uppercase tracking-wider mt-1">Delighted Bohemian Patrons</p>
+                    </div>
+                </div>
+            </div>
+            <div class="relative h-96 lg:h-[450px] rounded-2xl overflow-hidden shadow-2xl border border-goldleaf/30">
+                <img src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=1000&auto=format&fit=crop" alt="Artisanal Silver Crafting" class="w-full h-full object-cover">
+            </div>
+        </div>
+    </section>
+
+    <!-- Customer Reviews Section -->
+    <section id="reviews" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <div class="text-center max-w-2xl mx-auto mb-14 space-y-3">
+            <span class="text-xs uppercase tracking-[0.25em] font-semibold text-goldleaf">Loved Across India</span>
+            <h2 class="font-serif text-3xl md:text-4xl font-bold text-brand-950">Words From Our Patrons</h2>
+            <div class="w-16 h-0.5 bg-goldleaf mx-auto"></div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-brand-200 flex flex-col justify-between">
+                <div class="space-y-4">
+                    <div class="flex text-goldleaf space-x-1">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-brand-900 text-sm italic">"The oxidized finish and weight of the Banjara choker I ordered is absolutely royal. It feels like wearing authentic heirloom heritage!"</p>
+                </div>
+                <div class="pt-6 mt-6 border-t border-brand-100 flex items-center space-x-3">
+                    <div class="h-10 w-10 rounded-full bg-brand-200 font-bold flex items-center justify-center text-brand-900 font-serif">AS</div>
+                    <div>
+                        <h4 class="font-serif font-bold text-sm text-brand-950">Ananya Sen</h4>
+                        <p class="text-[11px] text-brand-700">Kolkata</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-brand-200 flex flex-col justify-between">
+                <div class="space-y-4">
+                    <div class="flex text-goldleaf space-x-1">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-brand-900 text-sm italic">"Reminds me of high-end boutique stores like Opasa. The craftsmanship is pristine, and packaging was drop-dead gorgeous."</p>
+                </div>
+                <div class="pt-6 mt-6 border-t border-brand-100 flex items-center space-x-3">
+                    <div class="h-10 w-10 rounded-full bg-brand-200 font-bold flex items-center justify-center text-brand-900 font-serif">PR</div>
+                    <div>
+                        <h4 class="font-serif font-bold text-sm text-brand-950">Priyanka Rathore</h4>
+                        <p class="text-[11px] text-brand-700">Jaipur</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-brand-200 flex flex-col justify-between">
+                <div class="space-y-4">
+                    <div class="flex text-goldleaf space-x-1">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-brand-900 text-sm italic">"Fast delivery and exceptional customer support over WhatsApp. Received endless compliments at my best friend's wedding!"</p>
+                </div>
+                <div class="pt-6 mt-6 border-t border-brand-100 flex items-center space-x-3">
+                    <div class="h-10 w-10 rounded-full bg-brand-200 font-bold flex items-center justify-center text-brand-900 font-serif">NM</div>
+                    <div>
+                        <h4 class="font-serif font-bold text-sm text-brand-950">Nidhi Menon</h4>
+                        <p class="text-[11px] text-brand-700">Bengaluru</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-brand-950 text-brand-200 pt-16 pb-12 px-4 border-t border-goldleaf/20">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+            <div class="space-y-4">
+                <span class="font-serif text-2xl font-bold tracking-wider text-white">RANG BANJARA</span>
+                <p class="text-xs text-brand-300 leading-relaxed font-light">
+                    Celebrating rural Indian tribal artistry through hand-forged silver and brass statements. Designed for the modern bohemian soul.
+                </p>
+                <div class="flex space-x-4 text-goldleaf pt-2">
+                    <a href="https://www.instagram.com/rang_banjara" target="_blank" class="hover:text-white transition-colors"><i class="fa-brands fa-instagram text-xl"></i></a>
+                    <a href="#" class="hover:text-white transition-colors"><i class="fa-brands fa-facebook text-xl"></i></a>
+                    <a href="#" class="hover:text-white transition-colors"><i class="fa-brands fa-pinterest text-xl"></i></a>
+                </div>
+            </div>
+
+            <div>
+                <h4 class="font-serif text-white font-bold text-sm uppercase tracking-wider mb-4">Quick Links</h4>
+                <ul class="space-y-2 text-xs font-light">
+                    <li><a href="#collections" class="hover:text-goldleaf transition-colors">Banjara Collections</a></li>
+                    <li><a href="#shop" class="hover:text-goldleaf transition-colors">All Products</a></li>
+                    <li><a href="#story" class="hover:text-goldleaf transition-colors">Artisan Heritage</a></li>
+                    <li><a href="#reviews" class="hover:text-goldleaf transition-colors">Customer Stories</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="font-serif text-white font-bold text-sm uppercase tracking-wider mb-4">Customer Care</h4>
+                <ul class="space-y-2 text-xs font-light">
+                    <li><a href="#" onclick="openMsgModal('Shipping Policy: We offer insured express delivery across all pin codes in India within 3-5 business days.')" class="hover:text-goldleaf transition-colors">Shipping &amp; Delivery</a></li>
+                    <li><a href="#" onclick="openMsgModal('Returns & Exchanges: 7-day hassle-free returns on all unworn items in original packaging.')" class="hover:text-goldleaf transition-colors">Returns &amp; Exchanges</a></li>
+                    <li><a href="#" onclick="openMsgModal('Jewellery Care: Avoid contact with perfumes, moisture, and harsh chemicals. Store in airtight pouches.')" class="hover:text-goldleaf transition-colors">Jewellery Care Guide</a></li>
+                    <li><a href="#" onclick="openMsgModal('Contact Us: Reach out via WhatsApp at +91 7303474030 or email support@rangbanjara.com')" class="hover:text-goldleaf transition-colors">Contact Us</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="font-serif text-white font-bold text-sm uppercase tracking-wider mb-4">Join The Tribe</h4>
+                <p class="text-xs text-brand-300 mb-4 font-light">Subscribe to receive private previews of new artisanal drops &amp; exclusive festival offers.</p>
+                <form onsubmit="handleNewsletter(event)" class="space-y-3">
+                    <input type="email" placeholder="Enter your email address" required class="w-full bg-brand-900 border border-brand-800 rounded-lg px-4 py-3 text-xs text-white focus:outline-none focus:border-goldleaf">
+                    <button type="submit" class="w-full bg-goldleaf hover:bg-goldleaf-dark text-brand-950 font-semibold uppercase text-xs tracking-widest py-3 rounded-lg transition-all">Subscribe</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto pt-8 border-t border-brand-900 text-center text-xs text-brand-400 font-light flex flex-col sm:flex-row items-center justify-between">
+            <p>&copy; 2026 Rang Banjara Jewellery. All Rights Reserved.</p>
+            <p class="mt-2 sm:mt-0">Inspired by Opasa &amp; Traditional Banjara Craftsmanship</p>
+        </div>
+    </footer>
+
+    <!-- Shopping Cart Slide-over Drawer -->
+    <div id="cart-drawer" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden transition-opacity opacity-0">
+        <div class="absolute top-0 right-0 bottom-0 w-full max-w-md bg-brand-50 p-6 flex flex-col justify-between shadow-2xl transform translate-x-full transition-transform duration-300" id="cart-drawer-panel">
+            <div>
+                <div class="flex items-center justify-between pb-4 border-b border-brand-200">
+                    <h3 class="font-serif text-xl font-bold text-brand-950 flex items-center gap-2">
+                        <i class="fa-solid fa-bag-shopping text-goldleaf"></i> Your Shopping Bag (<span id="cart-count">0</span>)
+                    </h3>
+                    <button onclick="toggleCartDrawer()" class="text-brand-900 p-2"><i class="fa-solid fa-xmark text-xl"></i></button>
+                </div>
+                <div id="cart-items" class="py-4 space-y-4 max-h-[50vh] overflow-y-auto">
+                    <!-- Populated dynamically -->
+                </div>
+            </div>
+
+            <div class="border-t border-brand-200 pt-4 space-y-4">
+                <div class="space-y-2 text-sm">
+                    <div class="flex justify-between text-brand-700">
+                        <span>Subtotal</span>
+                        <span id="cart-subtotal" class="font-semibold text-brand-950">₹0</span>
+                    </div>
+                    <div class="flex justify-between text-brand-700">
+                        <span>Insured Shipping</span>
+                        <span class="text-green-700 font-semibold">FREE</span>
+                    </div>
+                    <div class="flex justify-between text-base font-bold text-brand-950 pt-2 border-t border-brand-200">
+                        <span>Total Amount</span>
+                        <span id="cart-total" class="text-goldleaf-dark">₹0</span>
+                    </div>
+                </div>
+                <button onclick="openCheckoutModal()" class="w-full bg-brand-950 hover:bg-brand-900 text-white font-semibold uppercase text-xs tracking-[0.2em] py-4 rounded-xl shadow-lg transition-all">
+                    Proceed to Secure Checkout
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wishlist Slide-over Drawer -->
+    <div id="wishlist-drawer" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden transition-opacity opacity-0">
+        <div class="absolute top-0 right-0 bottom-0 w-full max-w-md bg-brand-50 p-6 flex flex-col justify-between shadow-2xl transform translate-x-full transition-transform duration-300" id="wishlist-drawer-panel">
+            <div>
+                <div class="flex items-center justify-between pb-4 border-b border-brand-200">
+                    <h3 class="font-serif text-xl font-bold text-brand-950 flex items-center gap-2">
+                        <i class="fa-solid fa-heart text-terracotta"></i> My Wishlist (<span id="wishlist-count">0</span>)
+                    </h3>
+                    <button onclick="toggleWishlistDrawer()" class="text-brand-900 p-2"><i class="fa-solid fa-xmark text-xl"></i></button>
+                </div>
+                <div id="wishlist-items" class="py-4 space-y-4 max-h-[65vh] overflow-y-auto">
+                    <!-- Populated dynamically -->
+                </div>
+            </div>
+            <div class="border-t border-brand-200 pt-4">
+                <button onclick="toggleWishlistDrawer()" class="w-full bg-brand-900 text-white font-semibold uppercase text-xs tracking-widest py-3 rounded-xl">Continue Shopping</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick View Modal -->
+    <div id="quickview-modal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="bg-brand-50 rounded-2xl max-w-3xl w-full overflow-hidden shadow-2xl relative transform scale-95 transition-transform duration-300" id="quickview-panel">
+            <button onclick="closeQuickView()" class="absolute top-4 right-4 z-10 bg-brand-950/70 hover:bg-brand-950 text-white rounded-full h-9 w-9 flex items-center justify-center transition-colors">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div id="quickview-content" class="grid grid-cols-1 md:grid-cols-2">
+                <!-- Populated dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Search Modal -->
+    <div id="search-modal" class="fixed inset-0 z-50 bg-brand-950/90 backdrop-blur-md hidden flex-col items-center justify-start pt-20 px-4">
+        <button onclick="closeSearchModal()" class="absolute top-6 right-6 text-white text-2xl"><i class="fa-solid fa-xmark"></i></button>
+        <div class="max-w-2xl w-full space-y-6">
+            <div class="relative">
+                <input type="text" id="search-input" oninput="handleSearch(this.value)" placeholder="Search necklaces, jhumkas, payal, oxidized silver..." class="w-full bg-brand-900 text-white placeholder-brand-400 text-lg md:text-xl px-6 py-4 rounded-2xl border border-brand-800 focus:outline-none focus:border-goldleaf pl-14">
+                <i class="fa-solid fa-magnifying-glass absolute left-5 top-5 text-goldleaf text-xl"></i>
+            </div>
+            <div id="search-results" class="space-y-3 max-h-[60vh] overflow-y-auto">
+                <!-- Search results populated dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div id="checkout-modal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-brand-50 rounded-2xl max-w-xl w-full p-6 md:p-8 shadow-2xl my-8 relative">
+            <button onclick="closeCheckoutModal()" class="absolute top-4 right-4 text-brand-900 p-2"><i class="fa-solid fa-xmark text-xl"></i></button>
+            <h3 class="font-serif text-2xl font-bold text-brand-950 mb-6">Secure Order Checkout</h3>
+            <form onsubmit="handleCheckoutSubmit(event)" class="space-y-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider font-semibold text-brand-900 mb-1">Full Name</label>
+                        <input type="text" required placeholder="Aarav Sharma" class="w-full bg-white border border-brand-200 rounded-lg p-3 text-xs text-brand-950 focus:outline-none focus:border-goldleaf">
+                    </div>
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider font-semibold text-brand-900 mb-1">Phone Number</label>
+                        <input type="tel" required placeholder="+91 98765 43210" class="w-full bg-white border border-brand-200 rounded-lg p-3 text-xs text-brand-950 focus:outline-none focus:border-goldleaf">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs uppercase tracking-wider font-semibold text-brand-900 mb-1">Delivery Address</label>
+                    <textarea required rows="3" placeholder="House/Flat no., Street name, Landmark..." class="w-full bg-white border border-brand-200 rounded-lg p-3 text-xs text-brand-950 focus:outline-none focus:border-goldleaf"></textarea>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider font-semibold text-brand-900 mb-1">City</label>
+                        <input type="text" required placeholder="Mumbai" class="w-full bg-white border border-brand-200 rounded-lg p-3 text-xs text-brand-950 focus:outline-none focus:border-goldleaf">
+                    </div>
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider font-semibold text-brand-900 mb-1">PIN Code</label>
+                        <input type="text" required placeholder="400001" class="w-full bg-white border border-brand-200 rounded-lg p-3 text-xs text-brand-950 focus:outline-none focus:border-goldleaf">
+                    </div>
+                </div>
+                <div class="pt-2">
+                    <label class="block text-xs uppercase tracking-wider font-semibold text-brand-900 mb-2">Payment Method</label>
+                    <div class="grid grid-cols-2 gap-4">
+                        <label class="border border-goldleaf bg-brand-100 p-3 rounded-lg flex items-center space-x-3 cursor-pointer">
+                            <input type="radio" name="payment" checked class="text-brand-900">
+                            <span class="text-xs font-medium text-brand-950">UPI / QR / Cards</span>
+                        </label>
+                        <label class="border border-brand-200 p-3 rounded-lg flex items-center space-x-3 cursor-pointer">
+                            <input type="radio" name="payment" class="text-brand-900">
+                            <span class="text-xs font-medium text-brand-950">Cash on Delivery</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="pt-4 border-t border-brand-200 flex items-center justify-between">
+                    <div>
+                        <p class="text-xs text-brand-700">Total Payable:</p>
+                        <p id="checkout-total-amount" class="font-serif text-xl font-bold text-brand-950">₹0</p>
+                    </div>
+                    <button type="submit" class="bg-goldleaf hover:bg-goldleaf-dark text-brand-950 font-semibold uppercase text-xs tracking-widest px-8 py-4 rounded-xl shadow-lg transition-all">
+                        Place Order
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- General Message Modal -->
+    <div id="msg-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="bg-brand-50 rounded-2xl max-w-md w-full p-6 shadow-2xl text-center space-y-4">
+            <div class="h-14 w-14 bg-goldleaf/20 text-goldleaf rounded-full flex items-center justify-center mx-auto text-2xl">
+                <i class="fa-solid fa-circle-info"></i>
+            </div>
+            <h3 id="msg-title" class="font-serif text-xl font-bold text-brand-950">Rang Banjara Notice</h3>
+            <p id="msg-body" class="text-sm text-brand-800 leading-relaxed font-light"></p>
+            <button onclick="closeMsgModal()" class="w-full bg-brand-950 text-white uppercase text-xs tracking-widest py-3 rounded-xl font-semibold">Understood</button>
+        </div>
+    </div>
+
+    <!-- Floating WhatsApp Button (Bottom Left) -->
+    <a href="https://wa.me/917303474030?text=Hi%20Rang%20Banjara%2C%20I%20have%20an%20inquiry%20about%20your%20jewellery." 
+       target="_blank" 
+       rel="noopener noreferrer" 
+       class="fixed bottom-5 left-5 z-40 flex items-center gap-2.5 sm:gap-3 bg-[#25D366] hover:bg-[#20ba5a] text-white px-3.5 py-2.5 sm:px-4 sm:py-3 rounded-full shadow-2xl hover:shadow-green-500/40 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 group focus:outline-none focus:ring-4 focus:ring-green-300"
+       aria-label="Chat on WhatsApp with +91 7303474030"
+       title="Chat with Rang Banjara on WhatsApp (+91 7303474030)">
+        <span class="relative flex items-center justify-center text-xl sm:text-2xl">
+            <i class="fa-brands fa-whatsapp text-2xl group-hover:scale-110 transition-transform"></i>
+            <span class="absolute -top-1 -right-1 flex h-2.5 w-2.5">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-white"></span>
+            </span>
+        </span>
+        <div class="flex flex-col text-left leading-tight pr-1">
+            <span class="text-[10px] uppercase font-semibold tracking-wider text-green-100">WhatsApp Us</span>
+            <span class="text-xs sm:text-sm font-bold font-sans tracking-wide">7303474030</span>
+        </div>
+    </a>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        const products = [
+            {
+                id: 1,
+                name: "Royal Banjara Oxidized Silver Choker",
+                category: "Necklaces",
+                price: 3499,
+                originalPrice: 4999,
+                badge: "Best Seller",
+                image: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?q=80&w=800&auto=format&fit=crop",
+                description: "Hand-forged in 925 oxidized silver finish featuring classic Kutch tribal bell motifs and ghungroo drops. A masterpiece for festive occasions."
+            },
+            {
+                id: 2,
+                name: "Tribal Peacock Brass Statement Ring",
+                category: "Rings",
+                price: 1299,
+                originalPrice: 1899,
+                badge: "New Drop",
+                image: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?q=80&w=800&auto=format&fit=crop",
+                description: "Adjustable brass statement ring showcasing intricate peacock carvings and vintage antique polish. Perfectly complements boho-chic attire."
+            },
+            {
+                id: 3,
+                name: "Kashmiri Filigree Chandbali Earrings",
+                category: "Earrings",
+                price: 1899,
+                originalPrice: 2599,
+                badge: "Limited Edition",
+                image: "https://images.unsplash.com/photo-1630019852942-f89202989a59?q=80&w=800&auto=format&fit=crop",
+                description: "Exquisite silver-plated brass chandbalis with intricate filigree work and delicate pearl hangings. Lightweight and comfortable for long wear."
+            },
+            {
+                id: 4,
+                name: "Nomadic Ghungroo Silver Payal (Pair)",
+                category: "Payal",
+                price: 2499,
+                originalPrice: 3299,
+                badge: "Trending",
+                image: "https://images.unsplash.com/photo-1611591475759-8d3941457008?q=80&w=800&auto=format&fit=crop",
+                description: "Traditional heavy oxidized payal adorned with melodious brass bells and tribal link chains. Crafted for weddings and cultural celebrations."
+            },
+            {
+                id: 5,
+                name: "Kutch Mirror-Work Long Necklace",
+                category: "Necklaces",
+                price: 4199,
+                originalPrice: 5599,
+                badge: "Handcrafted",
+                image: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?q=80&w=800&auto=format&fit=crop",
+                description: "Authentic Banjara fabric and silver-toned metal pendant necklace featuring hand-stitched mirror embroidery and coin charms."
+            },
+            {
+                id: 6,
+                name: "Geometric Bohemian Brass Cuff",
+                category: "Payal",
+                price: 1599,
+                originalPrice: 2199,
+                badge: "Popular",
+                image: "https://images.unsplash.com/photo-1573408301185-9146fe634ad0?q=80&w=800&auto=format&fit=crop",
+                description: "Open-adjustable chunky brass cuff bracelet engraved with tribal geometric patterns. An instant statement maker for any outfit."
+            },
+            {
+                id: 7,
+                name: "Antique Coin Studded Jhumkas",
+                category: "Earrings",
+                price: 1699,
+                originalPrice: 2299,
+                badge: "Best Seller",
+                image: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=800&auto=format&fit=crop",
+                description: "Classic bell-shaped jhumkas featuring layered antique coins and oxidized ghungroo clusters. A quintessential ethnic essential."
+            },
+            {
+                id: 8,
+                name: "Banjara Lotus Motif Silver Ring",
+                category: "Rings",
+                price: 999,
+                originalPrice: 1499,
+                badge: "Must Have",
+                image: "https://images.unsplash.com/photo-1603561591411-07134e71a2a9?q=80&w=800&auto=format&fit=crop",
+                description: "Delicate yet striking lotus flower ring crafted in German silver with dark oxidized highlights. Free size with adjustable band."
+            }
+        ];
+
+        let cart = [];
+        let wishlist = [];
+        let currentFilter = 'All';
+
+        window.addEventListener('DOMContentLoaded', () => {
+            renderProducts(products);
+            updateCartUI();
+            updateWishlistUI();
+        });
+
+        function renderProducts(items) {
+            const grid = document.getElementById('product-grid');
+            if (items.length === 0) {
+                grid.innerHTML = `<div class="col-span-full text-center py-16 text-brand-700 font-light">No jewellery pieces found in this category.</div>`;
+                return;
+            }
+
+            grid.innerHTML = items.map(p => `
+                <div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-brand-200 flex flex-col justify-between group">
+                    <div>
+                        <div class="relative h-72 overflow-hidden bg-brand-100 cursor-pointer" onclick="openQuickView(${p.id})">
+                            <span class="absolute top-3 left-3 z-10 bg-brand-950 text-goldleaf text-[10px] font-semibold uppercase tracking-widest px-3 py-1 rounded-full">${p.badge}</span>
+                            <button onclick="event.stopPropagation(); toggleWishlist(${p.id})" class="absolute top-3 right-3 z-10 bg-white/80 hover:bg-white text-brand-950 rounded-full h-8 w-8 flex items-center justify-center transition-colors shadow-sm">
+                                <i class="${isWishlisted(p.id) ? 'fa-solid text-terracotta' : 'fa-regular'} fa-heart"></i>
+                            </button>
+                            <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                            <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-brand-950/70 to-transparent p-4 opacity-0 group-hover:opacity-100 transition-opacity flex justify-center">
+                                <span class="bg-white text-brand-950 font-semibold uppercase text-[10px] tracking-widest px-4 py-2 rounded-full shadow">Quick View</span>
+                            </div>
+                        </div>
+                        <div class="p-5 space-y-2">
+                            <span class="text-[10px] uppercase tracking-widest text-goldleaf font-semibold">${p.category}</span>
+                            <h3 onclick="openQuickView(${p.id})" class="font-serif text-lg font-bold text-brand-950 hover:text-goldleaf-dark cursor-pointer line-clamp-1">${p.name}</h3>
+                            <div class="flex items-center space-x-2 pt-1">
+                                <span class="font-serif font-bold text-lg text-brand-950">₹${p.price.toLocaleString('en-IN')}</span>
+                                <span class="text-xs text-brand-500 line-through">₹${p.originalPrice.toLocaleString('en-IN')}</span>
+                                <span class="text-[10px] text-green-700 font-semibold bg-green-50 px-2 py-0.5 rounded">Save ₹${p.originalPrice - p.price}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-5 pt-0">
+                        <button onclick="addToCart(${p.id})" class="w-full bg-brand-900 hover:bg-brand-950 text-white font-semibold uppercase text-xs tracking-widest py-3 rounded-xl transition-all shadow-sm flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-bag-shopping text-goldleaf"></i> Add to Bag
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filterProducts(category) {
+            currentFilter = category;
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                if (btn.textContent.includes(category) || (category === 'All' && btn.textContent.includes('All'))) {
+                    btn.className = "filter-btn active px-5 py-2 rounded-full text-xs font-semibold uppercase tracking-wider bg-brand-900 text-white transition-all shadow-sm";
+                } else {
+                    btn.className = "filter-btn px-5 py-2 rounded-full text-xs font-semibold uppercase tracking-wider bg-brand-200 text-brand-900 hover:bg-brand-300 transition-all";
+                }
+            });
+
+            if (category === 'All') {
+                renderProducts(products);
+            } else {
+                renderProducts(products.filter(p => p.category === category));
+            }
+        }
+
+        function filterByCategory(category) {
+            filterProducts(category);
+            document.getElementById('shop').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const existing = cart.find(item => item.id === productId);
+            if (existing) {
+                existing.qty += 1;
+            } else {
+                cart.push({ ...product, qty: 1 });
+            }
+            updateCartUI();
+            toggleCartDrawer();
+        }
+
+        function updateCartQty(productId, change) {
+            const item = cart.find(i => i.id === productId);
+            if (item) {
+                item.qty += change;
+                if (item.qty <= 0) {
+                    cart = cart.filter(i => i.id !== productId);
+                }
+            }
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const totalCount = cart.reduce((sum, item) => sum + item.qty, 0);
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+
+            document.getElementById('cart-badge').textContent = totalCount;
+            document.getElementById('cart-count').textContent = totalCount;
+            document.getElementById('cart-subtotal').textContent = `₹${subtotal.toLocaleString('en-IN')}`;
+            document.getElementById('cart-total').textContent = `₹${subtotal.toLocaleString('en-IN')}`;
+            document.getElementById('checkout-total-amount').textContent = `₹${subtotal.toLocaleString('en-IN')}`;
+
+            const container = document.getElementById('cart-items');
+            if (cart.length === 0) {
+                container.innerHTML = `<div class="text-center py-12 text-brand-700 font-light">Your shopping bag is currently empty.</div>`;
+                return;
+            }
+
+            container.innerHTML = cart.map(item => `
+                <div class="flex items-center space-x-4 bg-white p-3 rounded-xl border border-brand-200">
+                    <img src="${item.image}" alt="${item.name}" class="h-16 w-16 object-cover rounded-lg">
+                    <div class="flex-1">
+                        <h4 class="font-serif text-sm font-bold text-brand-950 line-clamp-1">${item.name}</h4>
+                        <p class="text-xs text-goldleaf-dark font-semibold mt-0.5">₹${item.price.toLocaleString('en-IN')}</p>
+                        <div class="flex items-center space-x-3 mt-2">
+                            <button onclick="updateCartQty(${item.id}, -1)" class="h-6 w-6 bg-brand-200 rounded text-brand-900 font-bold text-xs flex items-center justify-center">-</button>
+                            <span class="text-xs font-semibold">${item.qty}</span>
+                            <button onclick="updateCartQty(${item.id}, 1)" class="h-6 w-6 bg-brand-200 rounded text-brand-900 font-bold text-xs flex items-center justify-center">+</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function toggleCartDrawer() {
+            const drawer = document.getElementById('cart-drawer');
+            const panel = document.getElementById('cart-drawer-panel');
+            if (drawer.classList.contains('hidden')) {
+                drawer.classList.remove('hidden');
+                setTimeout(() => {
+                    drawer.classList.remove('opacity-0');
+                    panel.classList.remove('translate-x-full');
+                }, 10);
+            } else {
+                drawer.classList.add('opacity-0');
+                panel.classList.add('translate-x-full');
+                setTimeout(() => drawer.classList.add('hidden'), 300);
+            }
+        }
+
+        function toggleWishlist(productId) {
+            const index = wishlist.indexOf(productId);
+            if (index > -1) {
+                wishlist.splice(index, 1);
+            } else {
+                wishlist.push(productId);
+            }
+            updateWishlistUI();
+            renderProducts(currentFilter === 'All' ? products : products.filter(p => p.category === currentFilter));
+        }
+
+        function isWishlisted(productId) {
+            return wishlist.includes(productId);
+        }
+
+        function updateWishlistUI() {
+            document.getElementById('wishlist-badge').textContent = wishlist.length;
+            document.getElementById('wishlist-count').textContent = wishlist.length;
+
+            const container = document.getElementById('wishlist-items');
+            if (wishlist.length === 0) {
+                container.innerHTML = `<div class="text-center py-12 text-brand-700 font-light">No favorite pieces saved yet.</div>`;
+                return;
+            }
+
+            const wishlistedProducts = products.filter(p => wishlist.includes(p.id));
+            container.innerHTML = wishlistedProducts.map(p => `
+                <div class="flex items-center justify-between bg-white p-3 rounded-xl border border-brand-200">
+                    <div class="flex items-center space-x-3">
+                        <img src="${p.image}" alt="${p.name}" class="h-16 w-16 object-cover rounded-lg">
+                        <div>
+                            <h4 class="font-serif text-sm font-bold text-brand-950 line-clamp-1">${p.name}</h4>
+                            <p class="text-xs text-goldleaf-dark font-semibold">₹${p.price.toLocaleString('en-IN')}</p>
+                        </div>
+                    </div>
+                    <div class="flex flex-col space-y-2">
+                        <button onclick="addToCart(${p.id}); toggleWishlist(${p.id})" class="text-xs bg-brand-900 text-white px-3 py-1.5 rounded-lg">Move to Bag</button>
+                        <button onclick="toggleWishlist(${p.id})" class="text-xs text-terracotta text-center font-medium">Remove</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function toggleWishlistDrawer() {
+            const drawer = document.getElementById('wishlist-drawer');
+            const panel = document.getElementById('wishlist-drawer-panel');
+            if (drawer.classList.contains('hidden')) {
+                drawer.classList.remove('hidden');
+                setTimeout(() => {
+                    drawer.classList.remove('opacity-0');
+                    panel.classList.remove('translate-x-full');
+                }, 10);
+            } else {
+                drawer.classList.add('opacity-0');
+                panel.classList.add('translate-x-full');
+                setTimeout(() => drawer.classList.add('hidden'), 300);
+            }
+        }
+
+        function openQuickView(productId) {
+            const p = products.find(prod => prod.id === productId);
+            const modal = document.getElementById('quickview-modal');
+            const panel = document.getElementById('quickview-panel');
+            const content = document.getElementById('quickview-content');
+
+            content.innerHTML = `
+                <div class="h-80 md:h-full bg-brand-100">
+                    <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover">
+                </div>
+                <div class="p-6 md:p-8 flex flex-col justify-between space-y-4">
+                    <div class="space-y-3">
+                        <span class="text-[10px] uppercase tracking-widest font-semibold text-goldleaf bg-goldleaf/10 px-3 py-1 rounded-full">${p.category}</span>
+                        <h2 class="font-serif text-2xl md:text-3xl font-bold text-brand-950">${p.name}</h2>
+                        <div class="flex items-center space-x-3">
+                            <span class="font-serif text-2xl font-bold text-brand-950">₹${p.price.toLocaleString('en-IN')}</span>
+                            <span class="text-sm text-brand-500 line-through">₹${p.originalPrice.toLocaleString('en-IN')}</span>
+                        </div>
+                        <p class="text-xs text-brand-800 leading-relaxed font-light pt-2">${p.description}</p>
+                        <div class="bg-brand-100 p-3 rounded-xl text-xs text-brand-900 space-y-1">
+                            <p><i class="fa-solid fa-shield-halved text-goldleaf mr-1"></i> Certified 925 Silver / Premium Brass Polish</p>
+                            <p><i class="fa-solid fa-truck text-goldleaf mr-1"></i> Free Insured Express Delivery across India</p>
+                        </div>
+                    </div>
+                    <div class="flex space-x-3 pt-4">
+                        <button onclick="addToCart(${p.id}); closeQuickView();" class="flex-1 bg-brand-950 hover:bg-brand-900 text-white font-semibold uppercase text-xs tracking-widest py-4 rounded-xl shadow-lg transition-all">
+                            Add to Shopping Bag
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            setTimeout(() => panel.classList.remove('scale-95'), 10);
+        }
+
+        function closeQuickView() {
+            const modal = document.getElementById('quickview-modal');
+            const panel = document.getElementById('quickview-panel');
+            panel.classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.remove('flex');
+                modal.classList.add('hidden');
+            }, 200);
+        }
+
+        function openSearchModal() {
+            document.getElementById('search-modal').classList.remove('hidden');
+            document.getElementById('search-modal').classList.add('flex');
+            document.getElementById('search-input').focus();
+        }
+
+        function closeSearchModal() {
+            document.getElementById('search-modal').classList.remove('flex');
+            document.getElementById('search-modal').classList.add('hidden');
+        }
+
+        function handleSearch(query) {
+            const resultsContainer = document.getElementById('search-results');
+            if (!query.trim()) {
+                resultsContainer.innerHTML = '';
+                return;
+            }
+
+            const filtered = products.filter(p => p.name.toLowerCase().includes(query.toLowerCase()) || p.category.toLowerCase().includes(query.toLowerCase()));
+            if (filtered.length === 0) {
+                resultsContainer.innerHTML = `<p class="text-center text-brand-300 text-sm py-4">No matching jewellery items found.</p>`;
+                return;
+            }
+
+            resultsContainer.innerHTML = filtered.map(p => `
+                <div onclick="closeSearchModal(); openQuickView(${p.id})" class="flex items-center space-x-4 bg-brand-900 hover:bg-brand-800 p-3 rounded-xl cursor-pointer border border-brand-800 transition-colors">
+                    <img src="${p.image}" alt="${p.name}" class="h-12 w-12 object-cover rounded-lg">
+                    <div class="flex-1">
+                        <h4 class="font-serif text-sm font-bold text-white">${p.name}</h4>
+                        <p class="text-xs text-goldleaf">₹${p.price.toLocaleString('en-IN')}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function openCheckoutModal() {
+            if (cart.length === 0) {
+                openMsgModal("Your shopping bag is empty. Please add items before proceeding to checkout.");
+                return;
+            }
+            toggleCartDrawer();
+            document.getElementById('checkout-modal').classList.remove('hidden');
+            document.getElementById('checkout-modal').classList.add('flex');
+        }
+
+        function closeCheckoutModal() {
+            document.getElementById('checkout-modal').classList.remove('flex');
+            document.getElementById('checkout-modal').classList.add('hidden');
+        }
+
+        function handleCheckoutSubmit(e) {
+            e.preventDefault();
+            closeCheckoutModal();
+            cart = [];
+            updateCartUI();
+            openMsgModal("Order Placed Successfully! Thank you for shopping with Rang Banjara. You will receive tracking details via SMS and WhatsApp shortly.");
+        }
+
+        function openMsgModal(text) {
+            document.getElementById('msg-body').textContent = text;
+            document.getElementById('msg-modal').classList.remove('hidden');
+            document.getElementById('msg-modal').classList.add('flex');
+        }
+
+        function closeMsgModal() {
+            document.getElementById('msg-modal').classList.remove('flex');
+            document.getElementById('msg-modal').classList.add('hidden');
+        }
+
+        function handleNewsletter(e) {
+            e.preventDefault();
+            e.target.reset();
+            openMsgModal("Thank you for subscribing to the Rang Banjara Tribe! Check your inbox for your 10% welcome discount code.");
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const panel = document.getElementById('mobile-menu-panel');
+            if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+                setTimeout(() => {
+                    menu.classList.remove('opacity-0');
+                    panel.classList.remove('-translate-x-full');
+                }, 10);
+            } else {
+                menu.classList.add('opacity-0');
+                panel.classList.add('-translate-x-full');
+                setTimeout(() => menu.classList.add('hidden'), 300);
+            }
+        }
+    </script>
+</body>
+</html>
