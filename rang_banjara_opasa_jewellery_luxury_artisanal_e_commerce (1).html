@@ -1061,6 +1061,39 @@ ${itemsList}
 
 Hello Rang Banjara, I have placed this order on your website rangbanjara.com. Please confirm my order and share tracking updates. Thank you!`;
 
+            // Save order to LocalStorage for Admin Panel
+            const orderRecord = {
+                orderId: orderId,
+                date: new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }),
+                time: new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' }),
+                timestamp: Date.now(),
+                customer: {
+                    name: name,
+                    phone: phone,
+                    address: address,
+                    city: city,
+                    pincode: pincode
+                },
+                items: cart.map(item => ({
+                    id: item.id,
+                    name: item.name,
+                    price: item.price,
+                    qty: item.qty,
+                    image: item.image
+                })),
+                total: subtotal,
+                paymentMethod: paymentMethod,
+                status: 'New'
+            };
+
+            try {
+                const storedOrders = JSON.parse(localStorage.getItem('rb_orders') || '[]');
+                storedOrders.unshift(orderRecord);
+                localStorage.setItem('rb_orders', JSON.stringify(storedOrders));
+            } catch (err) {
+                console.error("Could not save order locally", err);
+            }
+
             // Open WhatsApp with prefilled message
             const encodedUrl = `https://wa.me/917303474030?text=${encodeURIComponent(whatsappMessage)}`;
             window.open(encodedUrl, '_blank');
