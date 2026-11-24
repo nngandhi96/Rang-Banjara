@@ -432,7 +432,7 @@
         </div>
 
         <div class="max-w-7xl mx-auto pt-8 border-t border-brand-900 text-center text-xs text-brand-400 font-light flex flex-col sm:flex-row items-center justify-between">
-            <p>&copy; 2026 Rang Banjara Jewellery. All Rights Reserved.</p>
+            <p>&copy; 2026 Rang Banjara Jewellery. All Rights Reserved. • <a href="admin.html" class="hover:text-goldleaf ml-2 transition-colors inline-flex items-center gap-1 opacity-60 hover:opacity-100"><i class="fa-solid fa-lock text-[10px]"></i> Admin Portal</a></p>
             <p class="mt-2 sm:mt-0">Inspired by Opasa &amp; Traditional Banjara Craftsmanship</p>
         </div>
     </footer>
@@ -631,7 +631,7 @@
 
     <!-- JavaScript Application Logic -->
     <script>
-        const products = [
+        const defaultProducts = [
             {
                 id: 1,
                 name: "Royal Banjara Oxidized Silver Choker",
@@ -713,6 +713,17 @@
                 description: "Delicate yet striking lotus flower ring crafted in German silver with dark oxidized highlights. Free size with adjustable band."
             }
         ];
+
+        function getStoredProducts() {
+            try {
+                const stored = localStorage.getItem('rb_products');
+                return stored ? JSON.parse(stored) : defaultProducts;
+            } catch(e) {
+                return defaultProducts;
+            }
+        }
+
+        let products = getStoredProducts();
 
         let cart = [];
         let wishlist = [];
