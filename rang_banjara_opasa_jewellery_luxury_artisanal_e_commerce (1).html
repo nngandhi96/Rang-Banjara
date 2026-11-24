@@ -4,6 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rang Banjara | Artisanal Silver & Brass Jewellery</title>
+    <!-- Primary Meta Tags -->
+    <meta name="title" content="Rang Banjara | Artisanal Silver & Brass Jewellery">
+    <meta name="description" content="Discover handcrafted Banjara and tribal silver & brass jewellery. Shop exquisite oxidized chokers, jhumkas, payal, and statement rings at Rang Banjara. Free Insured Shipping Across India.">
+    <meta name="keywords" content="Rang Banjara, Banjara jewellery, tribal silver jewellery, oxidized jewellery, brass jewellery, handcrafted jhumkas, chokers, payal, bohemian jewellery India">
+    <meta name="author" content="Rang Banjara">
+    <meta name="theme-color" content="#321a11">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://rangbanjara.com/">
+
+    <!-- Open Graph / WhatsApp / Facebook Preview -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://rangbanjara.com/">
+    <meta property="og:title" content="Rang Banjara | Artisanal Silver & Brass Jewellery">
+    <meta property="og:description" content="Handcrafted tribal heritage in pure oxidized silver and brass. Free Insured Shipping across India.">
+    <meta property="og:image" content="https://rangbanjara.com/logo.jpg">
+    <meta property="og:image:width" content="1024">
+    <meta property="og:image:height" content="1024">
+    <meta property="og:site_name" content="Rang Banjara">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://rangbanjara.com/">
+    <meta name="twitter:title" content="Rang Banjara | Artisanal Silver & Brass Jewellery">
+    <meta name="twitter:description" content="Handcrafted tribal heritage in pure oxidized silver and brass. Free Insured Shipping across India.">
+    <meta name="twitter:image" content="https://rangbanjara.com/logo.jpg">
+
     <!-- Favicon -->
     <link rel="icon" type="image/jpeg" href="logo.jpg">
     <!-- Tailwind CSS -->
@@ -383,12 +410,14 @@
             </div>
 
             <div>
-                <h4 class="font-serif text-white font-bold text-sm uppercase tracking-wider mb-4">Customer Care</h4>
+                <h4 class="font-serif text-white font-bold text-sm uppercase tracking-wider mb-4">Customer Care & Policies</h4>
                 <ul class="space-y-2 text-xs font-light">
-                    <li><a href="#" onclick="openMsgModal('Shipping Policy: We offer insured express delivery across all pin codes in India within 3-5 business days.')" class="hover:text-goldleaf transition-colors">Shipping &amp; Delivery</a></li>
-                    <li><a href="#" onclick="openMsgModal('Returns & Exchanges: 7-day hassle-free returns on all unworn items in original packaging.')" class="hover:text-goldleaf transition-colors">Returns &amp; Exchanges</a></li>
-                    <li><a href="#" onclick="openMsgModal('Jewellery Care: Avoid contact with perfumes, moisture, and harsh chemicals. Store in airtight pouches.')" class="hover:text-goldleaf transition-colors">Jewellery Care Guide</a></li>
-                    <li><a href="#" onclick="openMsgModal('Contact Us: Reach out via WhatsApp at +91 7303474030 or email support@rangbanjara.com')" class="hover:text-goldleaf transition-colors">Contact Us</a></li>
+                    <li><a href="javascript:void(0)" onclick="openPolicy('shipping')" class="hover:text-goldleaf transition-colors">Shipping &amp; Delivery Policy</a></li>
+                    <li><a href="javascript:void(0)" onclick="openPolicy('returns')" class="hover:text-goldleaf transition-colors">7-Day Returns &amp; Replacement</a></li>
+                    <li><a href="javascript:void(0)" onclick="openPolicy('care')" class="hover:text-goldleaf transition-colors">Jewellery Care Guide</a></li>
+                    <li><a href="javascript:void(0)" onclick="openPolicy('privacy')" class="hover:text-goldleaf transition-colors">Privacy Policy</a></li>
+                    <li><a href="javascript:void(0)" onclick="openPolicy('terms')" class="hover:text-goldleaf transition-colors">Terms &amp; Conditions</a></li>
+                    <li><a href="javascript:void(0)" onclick="openPolicy('contact')" class="hover:text-goldleaf transition-colors">Contact Us &amp; Studio</a></li>
                 </ul>
             </div>
 
@@ -494,53 +523,65 @@
     <!-- Checkout Modal -->
     <div id="checkout-modal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden items-center justify-center p-4 overflow-y-auto">
         <div class="bg-brand-50 rounded-2xl max-w-xl w-full p-6 md:p-8 shadow-2xl my-8 relative">
-            <button onclick="closeCheckoutModal()" class="absolute top-4 right-4 text-brand-900 p-2"><i class="fa-solid fa-xmark text-xl"></i></button>
-            <h3 class="font-serif text-2xl font-bold text-brand-950 mb-6">Secure Order Checkout</h3>
+            <button onclick="closeCheckoutModal()" class="absolute top-4 right-4 text-brand-900 p-2 hover:opacity-75"><i class="fa-solid fa-xmark text-xl"></i></button>
+            <div class="flex items-center space-x-3 mb-2">
+                <img src="logo.jpg" alt="Rang Banjara" class="h-10 w-10 rounded-full object-cover border border-goldleaf/50">
+                <h3 class="font-serif text-2xl font-bold text-brand-950">Secure Order Checkout</h3>
+            </div>
+            <p class="text-xs text-brand-700 mb-6 font-light">Confirm details below. Your order will be sent instantly to our WhatsApp studio (<strong>+91 7303474030</strong>) for instant confirmation & tracking.</p>
             <form onsubmit="handleCheckoutSubmit(event)" class="space-y-4">
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-xs uppercase tracking-wider font-semibold text-brand-900 mb-1">Full Name</label>
-                        <input type="text" required placeholder="Aarav Sharma" class="w-full bg-white border border-brand-200 rounded-lg p-3 text-xs text-brand-950 focus:outline-none focus:border-goldleaf">
+                        <label class="block text-xs uppercase tracking-wider font-semibold text-brand-900 mb-1">Full Name *</label>
+                        <input type="text" id="checkout-name" required placeholder="Pooja Sharma" class="w-full bg-white border border-brand-200 rounded-lg p-3 text-xs text-brand-950 focus:outline-none focus:border-goldleaf">
                     </div>
                     <div>
-                        <label class="block text-xs uppercase tracking-wider font-semibold text-brand-900 mb-1">Phone Number</label>
-                        <input type="tel" required placeholder="+91 98765 43210" class="w-full bg-white border border-brand-200 rounded-lg p-3 text-xs text-brand-950 focus:outline-none focus:border-goldleaf">
+                        <label class="block text-xs uppercase tracking-wider font-semibold text-brand-900 mb-1">WhatsApp / Phone *</label>
+                        <input type="tel" id="checkout-phone" required placeholder="+91 98765 43210" class="w-full bg-white border border-brand-200 rounded-lg p-3 text-xs text-brand-950 focus:outline-none focus:border-goldleaf">
                     </div>
                 </div>
                 <div>
-                    <label class="block text-xs uppercase tracking-wider font-semibold text-brand-900 mb-1">Delivery Address</label>
-                    <textarea required rows="3" placeholder="House/Flat no., Street name, Landmark..." class="w-full bg-white border border-brand-200 rounded-lg p-3 text-xs text-brand-950 focus:outline-none focus:border-goldleaf"></textarea>
+                    <label class="block text-xs uppercase tracking-wider font-semibold text-brand-900 mb-1">Delivery Address *</label>
+                    <textarea id="checkout-address" required rows="3" placeholder="House/Flat No., Apartment, Street, Landmark..." class="w-full bg-white border border-brand-200 rounded-lg p-3 text-xs text-brand-950 focus:outline-none focus:border-goldleaf"></textarea>
                 </div>
                 <div class="grid grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-xs uppercase tracking-wider font-semibold text-brand-900 mb-1">City</label>
-                        <input type="text" required placeholder="Mumbai" class="w-full bg-white border border-brand-200 rounded-lg p-3 text-xs text-brand-950 focus:outline-none focus:border-goldleaf">
+                        <label class="block text-xs uppercase tracking-wider font-semibold text-brand-900 mb-1">City *</label>
+                        <input type="text" id="checkout-city" required placeholder="Jaipur / Mumbai / Delhi" class="w-full bg-white border border-brand-200 rounded-lg p-3 text-xs text-brand-950 focus:outline-none focus:border-goldleaf">
                     </div>
                     <div>
-                        <label class="block text-xs uppercase tracking-wider font-semibold text-brand-900 mb-1">PIN Code</label>
-                        <input type="text" required placeholder="400001" class="w-full bg-white border border-brand-200 rounded-lg p-3 text-xs text-brand-950 focus:outline-none focus:border-goldleaf">
+                        <label class="block text-xs uppercase tracking-wider font-semibold text-brand-900 mb-1">PIN Code *</label>
+                        <input type="text" id="checkout-pincode" required placeholder="302001" class="w-full bg-white border border-brand-200 rounded-lg p-3 text-xs text-brand-950 focus:outline-none focus:border-goldleaf">
                     </div>
                 </div>
                 <div class="pt-2">
-                    <label class="block text-xs uppercase tracking-wider font-semibold text-brand-900 mb-2">Payment Method</label>
+                    <label class="block text-xs uppercase tracking-wider font-semibold text-brand-900 mb-2">Preferred Payment Method</label>
                     <div class="grid grid-cols-2 gap-4">
-                        <label class="border border-goldleaf bg-brand-100 p-3 rounded-lg flex items-center space-x-3 cursor-pointer">
-                            <input type="radio" name="payment" checked class="text-brand-900">
-                            <span class="text-xs font-medium text-brand-950">UPI / QR / Cards</span>
+                        <label class="border-2 border-green-600 bg-green-50/50 p-3 rounded-xl flex items-center space-x-3 cursor-pointer">
+                            <input type="radio" name="checkout-payment" value="UPI / QR Code" checked class="text-green-600">
+                            <div>
+                                <span class="block text-xs font-bold text-brand-950">UPI / QR (Instant)</span>
+                                <span class="text-[10px] text-green-700">GPay, PhonePe, Paytm</span>
+                            </div>
                         </label>
-                        <label class="border border-brand-200 p-3 rounded-lg flex items-center space-x-3 cursor-pointer">
-                            <input type="radio" name="payment" class="text-brand-900">
-                            <span class="text-xs font-medium text-brand-950">Cash on Delivery</span>
+                        <label class="border border-brand-200 p-3 rounded-xl flex items-center space-x-3 cursor-pointer hover:bg-brand-100/50">
+                            <input type="radio" name="checkout-payment" value="Cash on Delivery (COD)" class="text-brand-900">
+                            <div>
+                                <span class="block text-xs font-bold text-brand-950">Cash on Delivery</span>
+                                <span class="text-[10px] text-brand-600">Pay at doorstep</span>
+                            </div>
                         </label>
                     </div>
                 </div>
                 <div class="pt-4 border-t border-brand-200 flex items-center justify-between">
                     <div>
-                        <p class="text-xs text-brand-700">Total Payable:</p>
-                        <p id="checkout-total-amount" class="font-serif text-xl font-bold text-brand-950">₹0</p>
+                        <p class="text-xs text-brand-700">Total Payable Amount:</p>
+                        <p id="checkout-total-amount" class="font-serif text-2xl font-bold text-brand-950">₹0</p>
+                        <p class="text-[10px] text-green-700 font-medium">Free Insured Express Delivery</p>
                     </div>
-                    <button type="submit" class="bg-goldleaf hover:bg-goldleaf-dark text-brand-950 font-semibold uppercase text-xs tracking-widest px-8 py-4 rounded-xl shadow-lg transition-all">
-                        Place Order
+                    <button type="submit" class="bg-[#25D366] hover:bg-[#20ba59] text-white font-semibold uppercase text-xs tracking-wider px-6 py-4 rounded-xl shadow-lg hover:shadow-green-500/30 transition-all flex items-center gap-2.5">
+                        <i class="fa-brands fa-whatsapp text-xl"></i>
+                        <span>Place Order via WhatsApp</span>
                     </button>
                 </div>
             </form>
@@ -551,11 +592,30 @@
     <div id="msg-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
         <div class="bg-brand-50 rounded-2xl max-w-md w-full p-6 shadow-2xl text-center space-y-4">
             <div class="h-14 w-14 bg-goldleaf/20 text-goldleaf rounded-full flex items-center justify-center mx-auto text-2xl">
-                <i class="fa-solid fa-circle-info"></i>
+                <i class="fa-solid fa-circle-check text-green-600"></i>
             </div>
             <h3 id="msg-title" class="font-serif text-xl font-bold text-brand-950">Rang Banjara Notice</h3>
             <p id="msg-body" class="text-sm text-brand-800 leading-relaxed font-light"></p>
             <button onclick="closeMsgModal()" class="w-full bg-brand-950 text-white uppercase text-xs tracking-widest py-3 rounded-xl font-semibold">Understood</button>
+        </div>
+    </div>
+
+    <!-- Legal & Policy Modal -->
+    <div id="policy-modal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="bg-brand-50 rounded-2xl max-w-2xl w-full p-6 md:p-8 shadow-2xl relative max-h-[85vh] flex flex-col">
+            <div class="flex items-center justify-between pb-4 border-b border-brand-200">
+                <div class="flex items-center space-x-3">
+                    <img src="logo.jpg" alt="Rang Banjara" class="h-9 w-9 rounded-full object-cover border border-goldleaf/40">
+                    <h3 id="policy-title" class="font-serif text-xl md:text-2xl font-bold text-brand-950"></h3>
+                </div>
+                <button onclick="closePolicyModal()" class="text-brand-900 hover:text-brand-950 p-2"><i class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
+            <div id="policy-content" class="py-6 space-y-4 text-xs md:text-sm text-brand-900 leading-relaxed font-light overflow-y-auto pr-2">
+                <!-- Dynamically populated -->
+            </div>
+            <div class="pt-4 border-t border-brand-200 flex justify-end">
+                <button onclick="closePolicyModal()" class="bg-brand-950 text-white uppercase text-xs tracking-widest px-6 py-3 rounded-xl font-semibold hover:bg-brand-900 transition-colors">Close</button>
+            </div>
         </div>
     </div>
 
@@ -679,7 +739,7 @@
                             <button onclick="event.stopPropagation(); toggleWishlist(${p.id})" class="absolute top-3 right-3 z-10 bg-white/80 hover:bg-white text-brand-950 rounded-full h-8 w-8 flex items-center justify-center transition-colors shadow-sm">
                                 <i class="${isWishlisted(p.id) ? 'fa-solid text-terracotta' : 'fa-regular'} fa-heart"></i>
                             </button>
-                            <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                            <img src="${p.image}" alt="${p.name}" onerror="this.onerror=null; this.src='logo.jpg'" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
                             <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-brand-950/70 to-transparent p-4 opacity-0 group-hover:opacity-100 transition-opacity flex justify-center">
                                 <span class="bg-white text-brand-950 font-semibold uppercase text-[10px] tracking-widest px-4 py-2 rounded-full shadow">Quick View</span>
                             </div>
@@ -954,10 +1014,139 @@
 
         function handleCheckoutSubmit(e) {
             e.preventDefault();
+
+            const name = document.getElementById('checkout-name').value.trim();
+            const phone = document.getElementById('checkout-phone').value.trim();
+            const address = document.getElementById('checkout-address').value.trim();
+            const city = document.getElementById('checkout-city').value.trim();
+            const pincode = document.getElementById('checkout-pincode').value.trim();
+            const paymentMethod = document.querySelector('input[name="checkout-payment"]:checked')?.value || 'UPI / QR Code';
+
+            if (cart.length === 0) {
+                openMsgModal("Your shopping bag is empty.");
+                return;
+            }
+
+            const orderId = 'RB-' + Math.floor(100000 + Math.random() * 900000);
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+            const itemsList = cart.map(item => `  • ${item.name} × ${item.qty} (₹${(item.price * item.qty).toLocaleString('en-IN')})`).join('\n');
+
+            const whatsappMessage = 
+`👑 *NEW ORDER - RANG BANJARA*
+*Order ID:* #${orderId}
+📅 *Date:* ${new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}
+
+📦 *Order Items:*
+${itemsList}
+
+💰 *Total Amount:* ₹${subtotal.toLocaleString('en-IN')} (Free Insured Delivery)
+💳 *Payment Mode:* ${paymentMethod}
+
+📍 *Customer & Delivery Details:*
+  • *Name:* ${name}
+  • *Phone:* ${phone}
+  • *Address:* ${address}
+  • *City & PIN:* ${city} - ${pincode}
+
+Hello Rang Banjara, I have placed this order on your website rangbanjara.com. Please confirm my order and share tracking updates. Thank you!`;
+
+            // Open WhatsApp with prefilled message
+            const encodedUrl = `https://wa.me/917303474030?text=${encodeURIComponent(whatsappMessage)}`;
+            window.open(encodedUrl, '_blank');
+
             closeCheckoutModal();
             cart = [];
             updateCartUI();
-            openMsgModal("Order Placed Successfully! Thank you for shopping with Rang Banjara. You will receive tracking details via SMS and WhatsApp shortly.");
+
+            document.getElementById('msg-title').textContent = "Order Placed Successfully! 🎉";
+            openMsgModal(`Thank you ${name}! Your Order #${orderId} has been sent directly to our WhatsApp studio (+91 7303474030). Our team will verify and dispatch your insured parcel with tracking details.`);
+        }
+
+        const policyData = {
+            shipping: {
+                title: "Shipping & Delivery Policy",
+                content: `
+                    <div class="space-y-3">
+                        <p><strong>1. Free Insured Express Delivery</strong><br>We provide free insured door-to-door express delivery across all pin codes in India on all orders above ₹2,999. For orders below ₹2,999, a flat standard shipping fee of ₹99 applies.</p>
+                        <p><strong>2. Dispatch &amp; Delivery Timelines</strong><br>Orders are dispatched from our artisan workshop within 24 to 48 business hours. Expected delivery time is <strong>3 to 5 business days</strong> for metro cities and 5 to 7 business days for regional and rural locations.</p>
+                        <p><strong>3. Trusted Logistics Partners</strong><br>We ship via premium courier partners including BlueDart, Delhivery, and DTDC. You will receive real-time SMS &amp; WhatsApp tracking links once your package is dispatched.</p>
+                        <p><strong>4. Tamper-Proof Luxury Packaging</strong><br>Every jewellery piece is packed in soft velvet anti-tarnish pouches encased within hardboard protective boxes to ensure 100% transit safety.</p>
+                    </div>
+                `
+            },
+            returns: {
+                title: "7-Day Returns & Replacement Policy",
+                content: `
+                    <div class="space-y-3">
+                        <p><strong>1. 7-Day Hassle-Free Replacement</strong><br>We offer a 7-day replacement guarantee on all items from the date of delivery in case of size issues, manufacturing defects, or transit damage.</p>
+                        <p><strong>2. Transit Damage Guarantee</strong><br>In the rare event that your jewellery arrives damaged, simply share photos or a short unboxing video on our official WhatsApp (<strong>+91 7303474030</strong>) within 48 hours. We will arrange a free immediate replacement.</p>
+                        <p><strong>3. Return Conditions</strong><br>To be eligible for return, the piece must be unused, unworn, in original condition with all security tags and brand packaging intact.</p>
+                        <p><strong>4. Reverse Pickup</strong><br>We arrange complimentary reverse pickup from your doorstep across supported pin codes.</p>
+                    </div>
+                `
+            },
+            care: {
+                title: "Artisanal Jewellery Care Guide",
+                content: `
+                    <div class="space-y-3">
+                        <p><strong>1. Avoid Direct Chemicals &amp; Fragrances</strong><br>Always wear your jewellery <em>after</em> applying makeup, perfumes, hair sprays, and lotions. Chemicals can accelerate tarnishing of oxidized silver and brass.</p>
+                        <p><strong>2. Keep Dry</strong><br>Remove your jewellery before showering, swimming, or rigorous workouts. Water and chlorine can damage delicate mirror-work and antique patina.</p>
+                        <p><strong>3. Airtight Storage</strong><br>When not wearing, store each piece individually in airtight zip-lock pouches (provided with your order) away from direct sunlight and humidity to prevent scratches.</p>
+                        <p><strong>4. Cleaning Instructions</strong><br>Gently wipe with a clean, dry microfiber cloth after every wear to remove natural skin oils. Never use harsh chemical liquid dips on oxidized Banjara jewellery.</p>
+                    </div>
+                `
+            },
+            privacy: {
+                title: "Privacy & Data Protection Policy",
+                content: `
+                    <div class="space-y-3">
+                        <p><strong>1. Data Collection &amp; Use</strong><br>We collect your name, shipping address, phone number, and email strictly to process and deliver your jewellery orders, provide tracking updates, and offer customer support.</p>
+                        <p><strong>2. Zero Data Selling</strong><br>Rang Banjara never sells, rents, or trades your personal information with any third-party marketing companies.</p>
+                        <p><strong>3. Secure Checkout</strong><br>Our website uses 256-bit SSL encryption. We never store credit/debit card numbers or UPI PINs on our servers.</p>
+                        <p><strong>4. Communication Choices</strong><br>You will only receive order-related notifications via WhatsApp and SMS. You can opt out of promotional messages at any time.</p>
+                    </div>
+                `
+            },
+            terms: {
+                title: "Terms & Conditions",
+                content: `
+                    <div class="space-y-3">
+                        <p><strong>1. Handcrafted Authenticity Disclaimer</strong><br>Each piece at Rang Banjara is handcrafted by traditional artisans. Subtle variations in texture, stone hues, and antique oxidized shading are natural hallmarks of authentic craftsmanship and not defects.</p>
+                        <p><strong>2. Pricing &amp; Taxes</strong><br>All prices displayed on <code>rangbanjara.com</code> are in Indian Rupees (INR) and inclusive of all applicable GST and duties.</p>
+                        <p><strong>3. Order Cancellations</strong><br>You may cancel an order before it has been dispatched by messaging us on WhatsApp (+91 7303474030). Once dispatched, cancellation is subject to standard return procedures.</p>
+                        <p><strong>4. Intellectual Property</strong><br>All images, brand logos, motifs, and content on this site are the exclusive property of Rang Banjara.</p>
+                    </div>
+                `
+            },
+            contact: {
+                title: "Contact Us & Artisan Studio",
+                content: `
+                    <div class="space-y-4">
+                        <div class="p-4 bg-brand-100 rounded-xl space-y-2">
+                            <p class="font-bold text-brand-950 text-sm">Rang Banjara Official Support</p>
+                            <p><strong>WhatsApp &amp; Call:</strong> +91 7303474030</p>
+                            <p><strong>Email:</strong> support@rangbanjara.com</p>
+                            <p><strong>Hours:</strong> Monday – Saturday | 10:00 AM – 7:00 PM IST</p>
+                        </div>
+                        <p>Have custom bridal requirements, wholesale enquiries, or need styling advice? Send us a direct message on WhatsApp and our jewellery curator will assist you personally within 30 minutes!</p>
+                    </div>
+                `
+            }
+        };
+
+        function openPolicy(type) {
+            const policy = policyData[type];
+            if (!policy) return;
+
+            document.getElementById('policy-title').textContent = policy.title;
+            document.getElementById('policy-content').innerHTML = policy.content;
+            document.getElementById('policy-modal').classList.remove('hidden');
+            document.getElementById('policy-modal').classList.add('flex');
+        }
+
+        function closePolicyModal() {
+            document.getElementById('policy-modal').classList.remove('flex');
+            document.getElementById('policy-modal').classList.add('hidden');
         }
 
         function openMsgModal(text) {
