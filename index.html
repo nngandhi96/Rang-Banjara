@@ -33,6 +33,8 @@
 
     <!-- Favicon -->
     <link rel="icon" type="image/jpeg" href="logo.jpg">
+    <!-- Razorpay Checkout SDK -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -555,33 +557,43 @@
                     </div>
                 </div>
                 <div class="pt-2">
-                    <label class="block text-xs uppercase tracking-wider font-semibold text-brand-900 mb-2">Preferred Payment Method</label>
-                    <div class="grid grid-cols-2 gap-4">
-                        <label class="border-2 border-green-600 bg-green-50/50 p-3 rounded-xl flex items-center space-x-3 cursor-pointer">
-                            <input type="radio" name="checkout-payment" value="UPI / QR Code" checked class="text-green-600">
-                            <div>
-                                <span class="block text-xs font-bold text-brand-950">UPI / QR (Instant)</span>
-                                <span class="text-[10px] text-green-700">GPay, PhonePe, Paytm</span>
+                    <label class="block text-xs uppercase tracking-wider font-semibold text-brand-900 mb-2">Choose How You Want to Pay *</label>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="payment-options-grid">
+                        <!-- Option 1: Pay Online -->
+                        <label onclick="selectPaymentMode('online')" class="border-2 border-brand-950 bg-brand-100/60 p-3.5 rounded-2xl flex items-start space-x-3 cursor-pointer transition-all shadow-sm" id="pay-card-online">
+                            <input type="radio" name="checkout-payment" value="Online Payment (UPI/Cards)" checked onchange="selectPaymentMode('online')" class="mt-0.5 text-brand-950">
+                            <div class="flex-1">
+                                <div class="flex items-center justify-between">
+                                    <span class="block text-xs font-bold text-brand-950">Pay Online Now</span>
+                                    <span class="bg-green-100 text-green-800 text-[9px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider">Fast &amp; Secure</span>
+                                </div>
+                                <span class="text-[10px] text-brand-700 block mt-1 leading-snug">UPI (GPay, PhonePe, Paytm), QR Code, Cards, NetBanking</span>
                             </div>
                         </label>
-                        <label class="border border-brand-200 p-3 rounded-xl flex items-center space-x-3 cursor-pointer hover:bg-brand-100/50">
-                            <input type="radio" name="checkout-payment" value="Cash on Delivery (COD)" class="text-brand-900">
-                            <div>
-                                <span class="block text-xs font-bold text-brand-950">Cash on Delivery</span>
-                                <span class="text-[10px] text-brand-600">Pay at doorstep</span>
+
+                        <!-- Option 2: Order via WhatsApp -->
+                        <label onclick="selectPaymentMode('whatsapp')" class="border border-brand-200 p-3.5 rounded-2xl flex items-start space-x-3 cursor-pointer hover:bg-brand-50 transition-all" id="pay-card-whatsapp">
+                            <input type="radio" name="checkout-payment" value="WhatsApp Order / COD" onchange="selectPaymentMode('whatsapp')" class="mt-0.5 text-brand-950">
+                            <div class="flex-1">
+                                <div class="flex items-center justify-between">
+                                    <span class="block text-xs font-bold text-brand-950">Order via WhatsApp</span>
+                                    <span class="bg-brand-200 text-brand-900 text-[9px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider">COD Available</span>
+                                </div>
+                                <span class="text-[10px] text-brand-700 block mt-1 leading-snug">Confirm order on WhatsApp &amp; Pay via UPI or Cash on Delivery</span>
                             </div>
                         </label>
                     </div>
                 </div>
-                <div class="pt-4 border-t border-brand-200 flex items-center justify-between">
+
+                <div class="pt-4 border-t border-brand-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <div>
                         <p class="text-xs text-brand-700">Total Payable Amount:</p>
                         <p id="checkout-total-amount" class="font-serif text-2xl font-bold text-brand-950">₹0</p>
                         <p class="text-[10px] text-green-700 font-medium">Free Insured Express Delivery</p>
                     </div>
-                    <button type="submit" class="bg-[#25D366] hover:bg-[#20ba59] text-white font-semibold uppercase text-xs tracking-wider px-6 py-4 rounded-xl shadow-lg hover:shadow-green-500/30 transition-all flex items-center gap-2.5">
-                        <i class="fa-brands fa-whatsapp text-xl"></i>
-                        <span>Place Order via WhatsApp</span>
+                    <button type="submit" id="checkout-submit-btn" class="bg-brand-950 hover:bg-brand-900 text-goldleaf font-bold uppercase text-xs tracking-wider px-7 py-4 rounded-xl shadow-lg transition-all flex items-center justify-center gap-2.5">
+                        <i id="checkout-btn-icon" class="fa-solid fa-lock text-sm"></i>
+                        <span id="checkout-btn-text">Pay Online Securely</span>
                     </button>
                 </div>
             </form>
@@ -615,6 +627,44 @@
             </div>
             <div class="pt-4 border-t border-brand-200 flex justify-end">
                 <button onclick="closePolicyModal()" class="bg-brand-950 text-white uppercase text-xs tracking-widest px-6 py-3 rounded-xl font-semibold hover:bg-brand-900 transition-colors">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Instant UPI Payment Modal -->
+    <div id="upi-modal" class="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="bg-brand-50 rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl relative text-center space-y-5">
+            <button onclick="closeUPIModal()" class="absolute top-4 right-4 text-brand-900 hover:text-brand-950 p-2"><i class="fa-solid fa-xmark text-xl"></i></button>
+            <div class="flex items-center justify-center space-x-2">
+                <img src="logo.jpg" alt="Rang Banjara" class="h-8 w-8 rounded-full border border-goldleaf">
+                <span class="font-serif text-lg font-bold text-brand-950">Rang Banjara UPI Pay</span>
+            </div>
+            <div>
+                <p class="text-xs text-brand-600">Scan QR Code using any UPI App to Pay</p>
+                <p id="upi-modal-amount" class="font-serif text-3xl font-bold text-brand-950 mt-1">₹0</p>
+                <p class="text-[11px] text-green-700 font-medium">Free Insured Express Delivery</p>
+            </div>
+            
+            <!-- Dynamic QR Code Container -->
+            <div class="bg-white p-4 rounded-2xl shadow-inner border border-brand-200 inline-block mx-auto">
+                <img id="upi-qr-image" src="" alt="UPI QR Code" class="h-44 w-44 mx-auto object-contain">
+            </div>
+
+            <!-- UPI Apps Direct Links for Mobile -->
+            <div class="space-y-2">
+                <p class="text-[11px] text-brand-700 font-semibold uppercase tracking-wider">Or Tap to Pay Directly on Mobile:</p>
+                <div class="flex items-center justify-center gap-2">
+                    <a id="upi-intent-btn" href="#" class="bg-white border border-brand-200 hover:border-goldleaf px-4 py-2.5 rounded-xl text-xs font-bold text-brand-950 shadow-sm transition-all flex items-center gap-2">
+                        <i class="fa-solid fa-mobile-screen text-goldleaf text-sm"></i> Open Installed UPI App
+                    </a>
+                </div>
+            </div>
+
+            <div class="pt-2">
+                <button onclick="confirmUPIPayment()" class="w-full bg-[#25D366] hover:bg-[#20ba59] text-white font-bold uppercase text-xs tracking-wider py-3.5 rounded-xl shadow-lg transition-all flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-circle-check text-base"></i>
+                    <span>I Have Completed Payment</span>
+                </button>
             </div>
         </div>
     </div>
@@ -1023,6 +1073,65 @@
             document.getElementById('checkout-modal').classList.add('hidden');
         }
 
+        let currentSelectedPaymentMode = 'online';
+
+        function selectPaymentMode(mode) {
+            currentSelectedPaymentMode = mode;
+            const cardOnline = document.getElementById('pay-card-online');
+            const cardWhatsapp = document.getElementById('pay-card-whatsapp');
+            const btn = document.getElementById('checkout-submit-btn');
+            const btnText = document.getElementById('checkout-btn-text');
+            const btnIcon = document.getElementById('checkout-btn-icon');
+
+            if (mode === 'online') {
+                cardOnline.className = "border-2 border-brand-950 bg-brand-100/60 p-3.5 rounded-2xl flex items-start space-x-3 cursor-pointer transition-all shadow-sm";
+                cardWhatsapp.className = "border border-brand-200 p-3.5 rounded-2xl flex items-start space-x-3 cursor-pointer hover:bg-brand-50 transition-all";
+                document.querySelector('input[value="Online Payment (UPI/Cards)"]').checked = true;
+                btn.className = "bg-brand-950 hover:bg-brand-900 text-goldleaf font-bold uppercase text-xs tracking-wider px-7 py-4 rounded-xl shadow-lg transition-all flex items-center justify-center gap-2.5";
+                btnIcon.className = "fa-solid fa-lock text-sm";
+                btnText.textContent = "Pay Online Securely";
+            } else {
+                cardWhatsapp.className = "border-2 border-brand-950 bg-brand-100/60 p-3.5 rounded-2xl flex items-start space-x-3 cursor-pointer transition-all shadow-sm";
+                cardOnline.className = "border border-brand-200 p-3.5 rounded-2xl flex items-start space-x-3 cursor-pointer hover:bg-brand-50 transition-all";
+                document.querySelector('input[value="WhatsApp Order / COD"]').checked = true;
+                btn.className = "bg-[#25D366] hover:bg-[#20ba59] text-white font-semibold uppercase text-xs tracking-wider px-7 py-4 rounded-xl shadow-lg transition-all flex items-center justify-center gap-2.5";
+                btnIcon.className = "fa-brands fa-whatsapp text-xl";
+                btnText.textContent = "Place Order via WhatsApp";
+            }
+        }
+
+        function saveOrderToStorage(order) {
+            try {
+                const storedOrders = JSON.parse(localStorage.getItem('rb_orders') || '[]');
+                storedOrders.unshift(order);
+                localStorage.setItem('rb_orders', JSON.stringify(storedOrders));
+            } catch (err) {
+                console.error("Could not save order locally", err);
+            }
+        }
+
+        function closeUPIModal() {
+            document.getElementById('upi-modal').classList.remove('flex');
+            document.getElementById('upi-modal').classList.add('hidden');
+        }
+
+        function confirmUPIPayment() {
+            if (!window.pendingOrder) return;
+            const order = window.pendingOrder;
+            order.status = "Paid";
+            order.paymentMethod = "Instant UPI Transfer";
+            saveOrderToStorage(order);
+            closeUPIModal();
+            cart = [];
+            updateCartUI();
+
+            document.getElementById('msg-title').textContent = "UPI Payment Submitted! 🎉";
+            openMsgModal(`Thank you ${order.customer.name}! Order #${order.orderId} of ₹${order.total.toLocaleString('en-IN')} has been received. Our team will verify and dispatch your insured parcel shortly.`);
+
+            const upiConfirmedMsg = `👑 *UPI PAYMENT COMPLETED - RANG BANJARA*\n*Order ID:* #${order.orderId}\n*Amount:* ₹${order.total.toLocaleString('en-IN')}\n*Customer:* ${order.customer.name} (${order.customer.phone})\n*Address:* ${order.customer.address}, ${order.customer.city} - ${order.customer.pincode}\n\nI have completed the UPI payment. Please verify and confirm my order. Thank you!`;
+            window.open(`https://wa.me/917303474030?text=${encodeURIComponent(upiConfirmedMsg)}`, '_blank');
+        }
+
         function handleCheckoutSubmit(e) {
             e.preventDefault();
 
@@ -1031,7 +1140,6 @@
             const address = document.getElementById('checkout-address').value.trim();
             const city = document.getElementById('checkout-city').value.trim();
             const pincode = document.getElementById('checkout-pincode').value.trim();
-            const paymentMethod = document.querySelector('input[name="checkout-payment"]:checked')?.value || 'UPI / QR Code';
 
             if (cart.length === 0) {
                 openMsgModal("Your shopping bag is empty.");
@@ -1042,26 +1150,6 @@
             const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
             const itemsList = cart.map(item => `  • ${item.name} × ${item.qty} (₹${(item.price * item.qty).toLocaleString('en-IN')})`).join('\n');
 
-            const whatsappMessage = 
-`👑 *NEW ORDER - RANG BANJARA*
-*Order ID:* #${orderId}
-📅 *Date:* ${new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}
-
-📦 *Order Items:*
-${itemsList}
-
-💰 *Total Amount:* ₹${subtotal.toLocaleString('en-IN')} (Free Insured Delivery)
-💳 *Payment Mode:* ${paymentMethod}
-
-📍 *Customer & Delivery Details:*
-  • *Name:* ${name}
-  • *Phone:* ${phone}
-  • *Address:* ${address}
-  • *City & PIN:* ${city} - ${pincode}
-
-Hello Rang Banjara, I have placed this order on your website rangbanjara.com. Please confirm my order and share tracking updates. Thank you!`;
-
-            // Save order to LocalStorage for Admin Panel
             const orderRecord = {
                 orderId: orderId,
                 date: new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }),
@@ -1082,19 +1170,91 @@ Hello Rang Banjara, I have placed this order on your website rangbanjara.com. Pl
                     image: item.image
                 })),
                 total: subtotal,
-                paymentMethod: paymentMethod,
+                paymentMethod: currentSelectedPaymentMode === 'online' ? 'Online Payment (UPI/Cards)' : 'WhatsApp Order (COD)',
                 status: 'New'
             };
 
-            try {
-                const storedOrders = JSON.parse(localStorage.getItem('rb_orders') || '[]');
-                storedOrders.unshift(orderRecord);
-                localStorage.setItem('rb_orders', JSON.stringify(storedOrders));
-            } catch (err) {
-                console.error("Could not save order locally", err);
+            // Option 1: Online Payment Selected
+            if (currentSelectedPaymentMode === 'online') {
+                const razorpayKey = localStorage.getItem('rb_razorpay_key');
+
+                if (razorpayKey && razorpayKey.startsWith('rzp_')) {
+                    // Real Razorpay Checkout
+                    try {
+                        const options = {
+                            key: razorpayKey,
+                            amount: subtotal * 100, // paise
+                            currency: "INR",
+                            name: "Rang Banjara",
+                            description: `Order #${orderId} - Artisanal Jewellery`,
+                            image: "https://rangbanjara.com/logo.jpg",
+                            prefill: {
+                                name: name,
+                                contact: phone
+                            },
+                            theme: {
+                                color: "#321a11"
+                            },
+                            handler: function(response) {
+                                orderRecord.status = "Paid";
+                                orderRecord.paymentId = response.razorpay_payment_id;
+                                orderRecord.paymentMethod = "Razorpay Online (Paid)";
+                                saveOrderToStorage(orderRecord);
+                                closeCheckoutModal();
+                                cart = [];
+                                updateCartUI();
+
+                                document.getElementById('msg-title').textContent = "Payment Successful! 🎉";
+                                openMsgModal(`Thank you ${name}! Your payment (ID: ${response.razorpay_payment_id}) for Order #${orderId} was successful!`);
+
+                                const paidMsg = `👑 *PAID ONLINE ORDER - RANG BANJARA*\n*Order ID:* #${orderId}\n*Payment ID:* ${response.razorpay_payment_id}\n*Customer:* ${name} (${phone})\n*Amount:* ₹${subtotal.toLocaleString('en-IN')}\n\n*Items:*\n${itemsList}\n\n*Address:* ${address}, ${city} - ${pincode}`;
+                                window.open(`https://wa.me/917303474030?text=${encodeURIComponent(paidMsg)}`, '_blank');
+                            }
+                        };
+                        const rzp = new Razorpay(options);
+                        rzp.open();
+                        return;
+                    } catch (err) {
+                        console.error("Razorpay init error", err);
+                    }
+                }
+
+                // If Razorpay Key not configured or fallback, show Instant UPI QR Pay Modal
+                window.pendingOrder = orderRecord;
+                document.getElementById('upi-modal-amount').textContent = `₹${subtotal.toLocaleString('en-IN')}`;
+                const upiId = localStorage.getItem('rb_upi_id') || '7303474030@upi';
+                const upiUrl = `upi://pay?pa=${encodeURIComponent(upiId)}&pn=Rang%20Banjara&am=${subtotal}&cu=INR&tn=Order%20${orderId}`;
+                document.getElementById('upi-qr-image').src = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(upiUrl)}`;
+                document.getElementById('upi-intent-btn').href = upiUrl;
+
+                closeCheckoutModal();
+                document.getElementById('upi-modal').classList.remove('hidden');
+                document.getElementById('upi-modal').classList.add('flex');
+                return;
             }
 
-            // Open WhatsApp with prefilled message
+            // Option 2: WhatsApp Order Selected
+            saveOrderToStorage(orderRecord);
+
+            const whatsappMessage = 
+`👑 *NEW ORDER - RANG BANJARA*
+*Order ID:* #${orderId}
+📅 *Date:* ${new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}
+
+📦 *Order Items:*
+${itemsList}
+
+💰 *Total Amount:* ₹${subtotal.toLocaleString('en-IN')} (Free Insured Delivery)
+💳 *Payment Mode:* Cash on Delivery / WhatsApp Confirm
+
+📍 *Customer & Delivery Details:*
+  • *Name:* ${name}
+  • *Phone:* ${phone}
+  • *Address:* ${address}
+  • *City & PIN:* ${city} - ${pincode}
+
+Hello Rang Banjara, I want to confirm this order via WhatsApp. Please share tracking and dispatch details. Thank you!`;
+
             const encodedUrl = `https://wa.me/917303474030?text=${encodeURIComponent(whatsappMessage)}`;
             window.open(encodedUrl, '_blank');
 
@@ -1102,8 +1262,8 @@ Hello Rang Banjara, I have placed this order on your website rangbanjara.com. Pl
             cart = [];
             updateCartUI();
 
-            document.getElementById('msg-title').textContent = "Order Placed Successfully! 🎉";
-            openMsgModal(`Thank you ${name}! Your Order #${orderId} has been sent directly to our WhatsApp studio (+91 7303474030). Our team will verify and dispatch your insured parcel with tracking details.`);
+            document.getElementById('msg-title').textContent = "Order Placed via WhatsApp! 🎉";
+            openMsgModal(`Thank you ${name}! Your Order #${orderId} has been sent directly to our WhatsApp studio (+91 7303474030). We will verify and process your delivery.`);
         }
 
         const policyData = {

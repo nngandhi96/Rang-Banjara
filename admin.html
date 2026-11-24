@@ -87,15 +87,19 @@
 
                 <!-- Navigation Tabs -->
                 <div class="flex items-center bg-brand-900/80 p-1.5 rounded-2xl border border-brand-800">
-                    <button onclick="switchTab('orders')" id="tab-btn-orders" class="px-4 py-2 rounded-xl text-xs font-semibold tracking-wider uppercase transition-all flex items-center gap-2 bg-goldleaf text-brand-950 shadow">
+                    <button onclick="switchTab('orders')" id="tab-btn-orders" class="px-3.5 sm:px-4 py-2 rounded-xl text-xs font-semibold tracking-wider uppercase transition-all flex items-center gap-2 bg-goldleaf text-brand-950 shadow">
                         <i class="fa-solid fa-box-open"></i>
                         <span>Orders</span>
                         <span id="tab-orders-badge" class="bg-brand-950 text-white text-[10px] px-2 py-0.5 rounded-full font-bold">0</span>
                     </button>
-                    <button onclick="switchTab('products')" id="tab-btn-products" class="px-4 py-2 rounded-xl text-xs font-semibold tracking-wider uppercase transition-all flex items-center gap-2 text-brand-200 hover:text-white">
+                    <button onclick="switchTab('products')" id="tab-btn-products" class="px-3.5 sm:px-4 py-2 rounded-xl text-xs font-semibold tracking-wider uppercase transition-all flex items-center gap-2 text-brand-200 hover:text-white">
                         <i class="fa-solid fa-gem"></i>
                         <span>Products</span>
                         <span id="tab-products-badge" class="bg-brand-800 text-brand-200 text-[10px] px-2 py-0.5 rounded-full font-bold">0</span>
+                    </button>
+                    <button onclick="switchTab('payments')" id="tab-btn-payments" class="px-3.5 sm:px-4 py-2 rounded-xl text-xs font-semibold tracking-wider uppercase transition-all flex items-center gap-2 text-brand-200 hover:text-white">
+                        <i class="fa-solid fa-credit-card"></i>
+                        <span class="hidden sm:inline">Payments</span>
                     </button>
                 </div>
 
@@ -347,6 +351,62 @@
                 </div>
             </div>
 
+            <!-- ============================================== -->
+            <!-- SECTION 3: PAYMENT GATEWAY SETTINGS            -->
+            <!-- ============================================== -->
+            <div id="section-payments" class="hidden space-y-8">
+                <div class="bg-white rounded-3xl p-6 sm:p-8 border border-brand-200 shadow-sm space-y-6 max-w-3xl">
+                    <div class="pb-4 border-b border-brand-200">
+                        <h2 class="font-serif text-2xl font-bold text-brand-950">Payment Gateway &amp; UPI Settings</h2>
+                        <p class="text-xs text-brand-700 font-light mt-0.5">Configure how customers pay online and via UPI on rangbanjara.com.</p>
+                    </div>
+
+                    <form onsubmit="handleSavePaymentSettings(event)" class="space-y-6">
+                        <!-- Option 1: Razorpay Gateway -->
+                        <div class="p-5 bg-brand-50 rounded-2xl border border-brand-200 space-y-3">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-2.5">
+                                    <span class="h-8 w-8 bg-blue-600 text-white rounded-lg flex items-center justify-center font-bold text-xs">R</span>
+                                    <div>
+                                        <h3 class="font-bold text-sm text-brand-950">Razorpay Payment Gateway (Cards, NetBanking, Auto UPI)</h3>
+                                        <p class="text-[11px] text-brand-600">Enter your Razorpay Key ID to activate live online card/UPI popup.</p>
+                                    </div>
+                                </div>
+                                <span id="razorpay-status-badge" class="bg-amber-100 text-amber-800 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase">Not Configured</span>
+                            </div>
+                            <div>
+                                <label class="block text-xs uppercase tracking-wider font-semibold text-brand-900 mb-1">Razorpay Key ID (rzp_live_... or rzp_test_...)</label>
+                                <input type="text" id="setting-razorpay-key" placeholder="e.g. rzp_live_xxxxxxxxxxxxxx" class="w-full bg-white border border-brand-200 rounded-xl p-3 text-xs font-mono focus:outline-none focus:border-goldleaf">
+                                <p class="text-[10px] text-brand-500 mt-1">Jab tak Razorpay Key nahi daalenge, website automatically customer ko instant UPI QR Code payment dikhayegi.</p>
+                            </div>
+                        </div>
+
+                        <!-- Option 2: Instant UPI ID -->
+                        <div class="p-5 bg-brand-50 rounded-2xl border border-brand-200 space-y-3">
+                            <div class="flex items-center space-x-2.5">
+                                <span class="h-8 w-8 bg-green-600 text-white rounded-lg flex items-center justify-center font-bold text-xs"><i class="fa-solid fa-qrcode"></i></span>
+                                <div>
+                                    <h3 class="font-bold text-sm text-brand-950">Direct UPI ID (Instant QR Pay)</h3>
+                                    <p class="text-[11px] text-brand-600">The UPI ID where customer QR code payments should be directed.</p>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-xs uppercase tracking-wider font-semibold text-brand-900 mb-1">UPI VPA Address</label>
+                                <input type="text" id="setting-upi-id" placeholder="e.g. 7303474030@upi" value="7303474030@upi" class="w-full bg-white border border-brand-200 rounded-xl p-3 text-xs font-mono focus:outline-none focus:border-goldleaf">
+                                <p class="text-[10px] text-brand-500 mt-1">Default set to: <strong>7303474030@upi</strong> (0% commission).</p>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-end pt-2">
+                            <button type="submit" class="bg-brand-950 hover:bg-brand-900 text-goldleaf font-bold uppercase text-xs tracking-widest px-8 py-3.5 rounded-xl shadow-lg transition-all flex items-center gap-2">
+                                <i class="fa-solid fa-floppy-disk"></i>
+                                <span>Save Payment Settings</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
         </main>
     </div>
 
@@ -532,24 +592,63 @@
         function switchTab(tab) {
             const secOrders = document.getElementById('section-orders');
             const secProducts = document.getElementById('section-products');
+            const secPayments = document.getElementById('section-payments');
             const btnOrders = document.getElementById('tab-btn-orders');
             const btnProducts = document.getElementById('tab-btn-products');
+            const btnPayments = document.getElementById('tab-btn-payments');
+
+            secOrders.classList.add('hidden');
+            secProducts.classList.add('hidden');
+            secPayments.classList.add('hidden');
+
+            const activeBtn = "px-3.5 sm:px-4 py-2 rounded-xl text-xs font-semibold tracking-wider uppercase transition-all flex items-center gap-2 bg-goldleaf text-brand-950 shadow";
+            const inactiveBtn = "px-3.5 sm:px-4 py-2 rounded-xl text-xs font-semibold tracking-wider uppercase transition-all flex items-center gap-2 text-brand-200 hover:text-white";
+
+            btnOrders.className = inactiveBtn;
+            btnProducts.className = inactiveBtn;
+            btnPayments.className = inactiveBtn;
 
             if (tab === 'orders') {
                 secOrders.classList.remove('hidden');
-                secProducts.classList.add('hidden');
-                btnOrders.className = "px-4 py-2 rounded-xl text-xs font-semibold tracking-wider uppercase transition-all flex items-center gap-2 bg-goldleaf text-brand-950 shadow";
-                btnProducts.className = "px-4 py-2 rounded-xl text-xs font-semibold tracking-wider uppercase transition-all flex items-center gap-2 text-brand-200 hover:text-white";
+                btnOrders.className = activeBtn;
                 renderOrdersTable();
                 updateOrderStats();
-            } else {
-                secOrders.classList.add('hidden');
+            } else if (tab === 'products') {
                 secProducts.classList.remove('hidden');
-                btnProducts.className = "px-4 py-2 rounded-xl text-xs font-semibold tracking-wider uppercase transition-all flex items-center gap-2 bg-goldleaf text-brand-950 shadow";
-                btnOrders.className = "px-4 py-2 rounded-xl text-xs font-semibold tracking-wider uppercase transition-all flex items-center gap-2 text-brand-200 hover:text-white";
+                btnProducts.className = activeBtn;
                 renderProductsTable();
                 updateProductStats();
+            } else if (tab === 'payments') {
+                secPayments.classList.remove('hidden');
+                btnPayments.className = activeBtn;
+                loadPaymentSettings();
             }
+        }
+
+        function loadPaymentSettings() {
+            const rzpKey = localStorage.getItem('rb_razorpay_key') || '';
+            const upiId = localStorage.getItem('rb_upi_id') || '7303474030@upi';
+            document.getElementById('setting-razorpay-key').value = rzpKey;
+            document.getElementById('setting-upi-id').value = upiId;
+
+            const badge = document.getElementById('razorpay-status-badge');
+            if (rzpKey.startsWith('rzp_')) {
+                badge.className = "bg-green-100 text-green-800 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase";
+                badge.textContent = "Active";
+            } else {
+                badge.className = "bg-amber-100 text-amber-800 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase";
+                badge.textContent = "Not Configured";
+            }
+        }
+
+        function handleSavePaymentSettings(e) {
+            e.preventDefault();
+            const rzpKey = document.getElementById('setting-razorpay-key').value.trim();
+            const upiId = document.getElementById('setting-upi-id').value.trim() || '7303474030@upi';
+            localStorage.setItem('rb_razorpay_key', rzpKey);
+            localStorage.setItem('rb_upi_id', upiId);
+            loadPaymentSettings();
+            showToast("Payment Settings Saved!");
         }
 
         // Login Handler
